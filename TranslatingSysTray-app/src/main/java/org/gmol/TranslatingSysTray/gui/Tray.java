@@ -31,7 +31,8 @@ import javax.swing.JTextPane;
 public class Tray implements IGui {
 
 	private static final String TOOLTIP = "tray test";
-	private static final String IMAGE = "/usr/share/pixmaps/gnome-gmush.png";
+	public static final String IMAGE = "/usr/share/pixmaps/gnome-gmush.png";
+	public static final int DELAY = (10 * 1000);
 	TrayIcon trayIcon = null;
 	SystemTray tray = null;
 	DisplayFrame frame = null;
@@ -50,8 +51,6 @@ public class Tray implements IGui {
 	private void open() {
 		if (SystemTray.isSupported()) {
 			
-	        
-			
 			tray = SystemTray.getSystemTray();
 			Image trayImage = Toolkit.getDefaultToolkit().getImage(IMAGE);
 			trayIcon = new TrayIcon(trayImage, TOOLTIP, createMenu());
@@ -61,7 +60,7 @@ public class Tray implements IGui {
 
 				//Create and set up the window.
 		        frame = new DisplayFrame("Translator");	 
-		        frame.setVisible(true);
+		        
 
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
@@ -114,19 +113,21 @@ public class Tray implements IGui {
 
 			trayIcon.addMouseMotionListener(new MouseAdapter() {
 				public void mouseMoved(MouseEvent e) {
-					if (!entered) {
+					if (!entered) {						
 						System.out.println("entered is false set it to true");
 						entered = true;
+						frame.setVisible(entered);
 
 						System.out.println("Clipboard:\n" + getClipboard()
 								+ "\n");
 
-						long delay = 10 * 1000;
+						long delay = DELAY;
 						new java.util.Timer().schedule(new TimerTask() {
 							public void run() {
 								System.out
 										.println("TimerTask: Set entered to false");
 								entered = false;
+								frame.setVisible(entered);
 							}
 						}, delay);
 						System.out.println(e);
@@ -162,13 +163,10 @@ public class Tray implements IGui {
 
 	@Override
 	public void setText(String txt) {
-		trayIcon.displayMessage("caption", txt, TrayIcon.MessageType.INFO);
 		System.out.println(txt);
 		System.out.println("Get clipboard:");
 		System.out.println(getClipboard());
 		frame.setText(txt);
-		
-
 	}
 
 	private String getClipboard() {

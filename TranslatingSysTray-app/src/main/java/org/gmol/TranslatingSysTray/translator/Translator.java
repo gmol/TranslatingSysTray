@@ -45,12 +45,12 @@ public class Translator {
 
 			System.out.println("*** Search result");
 			JSONObject results = new JSONObject(
-					api.search(dictCode, "go", 1, 1));
+					api.search(dictCode, "go", 10, 1));
 //			System.out.println(results);		
 
-//			System.out.println("*** Get entry");
-//			JSONObject getEntryresults = new JSONObject(api.getEntry(dictCode,
-//					"go_1", "html"));
+			System.out.println("*** Get entry");
+			JSONObject getEntryresults = new JSONObject(api.getEntry(dictCode,
+					"go_1", "html"));
 //			System.out.println(getEntryresults);
 //
 //			System.out.println("*** Spell checking");
@@ -66,7 +66,8 @@ public class Translator {
 //			JSONObject nearbyEntries = new JSONObject(api.getNearbyEntries(
 //					dictCode, bestMatch.getString("entryId"), 3));
 //			System.out.println(nearbyEntries);
-			return results.toString();
+//			return results.toString();
+			return DeJsonizer.dejsonEntry(getEntryresults);
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
