@@ -45,7 +45,7 @@ public class Translator {
 
 			System.out.println("*** Search result");
 			JSONObject results = new JSONObject(
-					api.search(dictCode, "go", 10, 1));
+					api.search(dictCode, word, 10, 1));
 //			System.out.println(results);		
 
 			System.out.println("*** Get entry");
@@ -66,8 +66,8 @@ public class Translator {
 //			JSONObject nearbyEntries = new JSONObject(api.getNearbyEntries(
 //					dictCode, bestMatch.getString("entryId"), 3));
 //			System.out.println(nearbyEntries);
-//			return results.toString();
-			return DeJsonizer.dejsonEntry(getEntryresults);
+			return results.toString();
+//			return DeJsonizer.dejsonEntry(getEntryresults);
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

@@ -28,11 +28,6 @@ public class App {
 	}
 	
 	public static void main(String[] args) {		
-		App app = new App();
-		String translated = app.translator.translate(args[0]);
-		app.gui.setText(translated);
-		
-	
-		
+		new App();	
 	}
 }

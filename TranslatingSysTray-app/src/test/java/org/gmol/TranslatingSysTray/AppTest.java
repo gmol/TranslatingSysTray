@@ -1,4 +1,4 @@
-package org.TranslatingSysTray;
+package org.gmol.TranslatingSysTray;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

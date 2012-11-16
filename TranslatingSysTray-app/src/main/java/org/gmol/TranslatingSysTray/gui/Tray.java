@@ -22,6 +22,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+import org.gmol.TranslatingSysTray.translator.Translator;
+
 ;
 
 /**
@@ -32,17 +34,18 @@ public class Tray implements IGui {
 
 	private static final String TOOLTIP = "tray test";
 	public static final String IMAGE = "/usr/share/pixmaps/gnome-gmush.png";
-	public static final int DELAY = (10 * 1000);
+	public static final int DELAY = (5 * 1000);
 	TrayIcon trayIcon = null;
 	SystemTray tray = null;
 	DisplayFrame frame = null;
 	private boolean entered = false;
+	Translator translator = new Translator();
+	String prevWord = "";
+	String prevTranstalation = "";
 
-	public Tray() {
+	public Tray() {		
 		open();
 	}
-	
-	
 
 	public static void main(String[] args) {
 		// new Tray().open();
@@ -113,13 +116,19 @@ public class Tray implements IGui {
 
 			trayIcon.addMouseMotionListener(new MouseAdapter() {
 				public void mouseMoved(MouseEvent e) {
-					if (!entered) {						
+					if (!entered) {					
+						String word = getClipboard();
+//						System.out.println("prev word(" + prevWord + ") word(" + word + ")");
+						if (prevWord.equals(word)) {
+							word = prevTranstalation;
+						} else {
+							prevWord = word;
+							prevTranstalation = word = translator.translate(word);							
+						}
 						System.out.println("entered is false set it to true");
 						entered = true;
 						frame.setVisible(entered);
-
-						System.out.println("Clipboard:\n" + getClipboard()
-								+ "\n");
+						setText(word);
 
 						long delay = DELAY;
 						new java.util.Timer().schedule(new TimerTask() {
@@ -127,7 +136,7 @@ public class Tray implements IGui {
 								System.out
 										.println("TimerTask: Set entered to false");
 								entered = false;
-								frame.setVisible(entered);
+//								frame.setVisible(entered);
 							}
 						}, delay);
 						System.out.println(e);
@@ -150,8 +159,6 @@ public class Tray implements IGui {
 		menu.add(exit);
 		return menu;
 	}
-	
-	  
 
 	class exitListener implements ActionListener {
 
