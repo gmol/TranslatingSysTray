@@ -12,6 +12,7 @@ public class Translator {
 
 	private static final String BASEURL = "https://dictionary.cambridge.org";
 	private static final String KEY = "";
+	private SearchDataSet dataset = new SearchDataSet();
 
 	public Translator() {
 		// TODO Auto-generated constructor stub
@@ -21,10 +22,8 @@ public class Translator {
 
 		System.out.println("Hello World!");
 
-		DefaultHttpClient httpClient = new DefaultHttpClient(
-				new ThreadSafeClientConnManager());
-		SkPublishAPI api = new SkPublishAPI(BASEURL + "/api/v1", KEY,
-				httpClient);
+		DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
+		SkPublishAPI api = new SkPublishAPI(BASEURL + "/api/v1", KEY, httpClient);
 		api.setRequestHandler(new SkPublishAPI.RequestHandler() {
 			public void prepareGetRequest(HttpGet request) {
 				System.out.println("*** Request: " + request.getURI());
@@ -32,43 +31,30 @@ public class Translator {
 		});
 
 		try {
-//			System.out.println("*** Dictionaries ***");
-//			JSONArray dictionaries = new JSONArray(api.getDictionaries());
-//			System.out.println("*** JSONArray dictionaries:");
-//			System.out.println(dictionaries);
+			// System.out.println("*** Dictionaries ***");
+			// JSONArray dictionaries = new JSONArray(api.getDictionaries());
+			// System.out.println("*** JSONArray dictionaries:");
+			// System.out.println(dictionaries);
 
-//			JSONObject dict = dictionaries.getJSONObject(0);
-//			System.out.println("*** dictionaries.getJSONObject(0):");
-//			System.out.println(dict);
-//			String dictCode = dict.getString("dictionaryCode");
-//			System.out.println("*** dictCode: " + dictCode);
+			// JSONObject dict = dictionaries.getJSONObject(0);
+			// System.out.println("*** dictionaries.getJSONObject(0):");
+			// System.out.println(dict);
+			// String dictCode = dict.getString("dictionaryCode");
+			// System.out.println("*** dictCode: " + dictCode);
 
 			String dictCode = "british";
 			System.out.println("*** Search result");
-			JSONObject results = new JSONObject(
-					api.search(dictCode, word, 10, 1));
-//			System.out.println(results);		
-
+			JSONObject results = new JSONObject(api.search(dictCode, word, 10, 1));
+			Page page = DeJsonizer.dejsonSearch(results);
+			dataset.addPage(page);
+			
+			// System.out.println(results);
 			System.out.println("*** Get entry");
-			JSONObject getEntryresults = new JSONObject(api.getEntry(dictCode,
-					"go_1", "html"));
-//			System.out.println(getEntryresults);
-//
-//			System.out.println("*** Spell checking");
-//			JSONObject spellResults = new JSONObject(api.didYouMean(dictCode,
-//					"dorg", 3));
-//			System.out.println(spellResults);
-//			System.out.println("*** Best matching");
-//			JSONObject bestMatch = new JSONObject(api.searchFirst(dictCode,
-//					"ca", "html"));
-//			System.out.println(bestMatch);
-//
-//			System.out.println("*** Nearby Entries");
-//			JSONObject nearbyEntries = new JSONObject(api.getNearbyEntries(
-//					dictCode, bestMatch.getString("entryId"), 3));
-//			System.out.println(nearbyEntries);
-			return results.toString();
-//			return DeJsonizer.dejsonEntry(getEntryresults);
+			String entryId = page.getEntry(0).getEntryLabel();
+			JSONObject getEntryresults = new JSONObject(api.getEntry(dictCode, entryId, "html"));
+			
+		    return DeJsonizer.dejsonEntry(getEntryresults);
+			// return DeJsonizer.dejsonEntry(getEntryresults);
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}

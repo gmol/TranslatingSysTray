@@ -1,8 +1,11 @@
 package org.gmol.TranslatingSysTray.translator;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.json.*;
+
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 /*
 {
@@ -49,7 +52,8 @@ import org.json.*;
 
 class DeJsonizer {
 	
-	public static String dejsonSearch(JSONObject search) {
+	public static Page dejsonSearch(JSONObject search) {
+		
 		try {
 			int totalResultNumber = (Integer) search.get("resultNumber");
 			System.out.println("Result Number: " + totalResultNumber);
@@ -60,7 +64,9 @@ class DeJsonizer {
 			// loop array
 			JSONArray results = (JSONArray) search.get("results");
 			int resultNumber = results.length();
+			java.util.List<Entry> entries = new ArrayList<Entry>();
 			for (int i = 0; i < results.length(); i++) {
+				
 				JSONObject o = (JSONObject) results.get(i);
 
 				String entryLabel = (String) o.get("entryLabel");
@@ -68,7 +74,11 @@ class DeJsonizer {
 
 				String entryId = (String) o.get("entryId");
 				System.out.println("entryLabel: " + entryLabel);
+				
+				entries.add(new Entry(entryId, entryLabel));
+				
 			}
+			return new Page(totalResultNumber, pageNumber, currentPageIndex, entries);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block			
 			e.printStackTrace();
