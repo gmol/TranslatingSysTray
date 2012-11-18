@@ -11,7 +11,6 @@ import org.gmol.TranslatingSysTray.translator.Translator;
 public class App {
 	
 	private IGui gui;
-	Translator translator = new Translator();
 	
 	public App() {
 		//Schedule a job for the event-dispatching thread:
@@ -28,6 +27,11 @@ public class App {
 	}
 	
 	public static void main(String[] args) {		
+		for (String string : args) {
+			System.out.println("args: " + string);
+		}
+		String key = args[0];
+		Translator.KEY = key;
 		new App();	
 	}
 }

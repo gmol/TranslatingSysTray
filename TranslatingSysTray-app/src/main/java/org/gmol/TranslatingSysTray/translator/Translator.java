@@ -11,7 +11,7 @@ import fr.idm.sk.publish.api.client.light.SkPublishAPI;
 public class Translator {
 
 	private static final String BASEURL = "https://dictionary.cambridge.org";
-	private static final String KEY = "";
+	public static String KEY = "";
 	private SearchDataSet dataset = new SearchDataSet();
 
 	public Translator() {
