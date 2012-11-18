@@ -33,16 +33,17 @@ public class Translator {
 
 		try {
 //			System.out.println("*** Dictionaries ***");
-			JSONArray dictionaries = new JSONArray(api.getDictionaries());
+//			JSONArray dictionaries = new JSONArray(api.getDictionaries());
 //			System.out.println("*** JSONArray dictionaries:");
 //			System.out.println(dictionaries);
 
-			JSONObject dict = dictionaries.getJSONObject(0);
+//			JSONObject dict = dictionaries.getJSONObject(0);
 //			System.out.println("*** dictionaries.getJSONObject(0):");
 //			System.out.println(dict);
-			String dictCode = dict.getString("dictionaryCode");
+//			String dictCode = dict.getString("dictionaryCode");
 //			System.out.println("*** dictCode: " + dictCode);
 
+			String dictCode = "british";
 			System.out.println("*** Search result");
 			JSONObject results = new JSONObject(
 					api.search(dictCode, word, 10, 1));
