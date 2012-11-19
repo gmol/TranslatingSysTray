@@ -2,10 +2,7 @@ package org.gmol.TranslatingSysTray.translator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.json.*;
-
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 /*
 {
@@ -56,11 +53,11 @@ class DeJsonizer {
 		
 		try {
 			int totalResultNumber = (Integer) search.get("resultNumber");
-			System.out.println("Result Number: " + totalResultNumber);
+			System.out.println("Total Result Number: " + totalResultNumber);
 			int pageNumber = (Integer) search.get("pageNumber");
 			System.out.println("Page number:" + pageNumber);
 			int currentPageIndex = (Integer) search.get("currentPageIndex");
-			System.out.println("Page number:" + currentPageIndex);
+			System.out.println("Current Page index:" + currentPageIndex);
 			// loop array
 			JSONArray results = (JSONArray) search.get("results");
 			int resultNumber = results.length();
@@ -73,7 +70,7 @@ class DeJsonizer {
 				System.out.println("entryLabel: " + entryLabel);
 
 				String entryId = (String) o.get("entryId");
-				System.out.println("entryLabel: " + entryLabel);
+				System.out.println("entryId: " + entryId);
 				
 				entries.add(new Entry(entryId, entryLabel));
 				

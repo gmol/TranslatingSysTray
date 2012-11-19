@@ -3,19 +3,17 @@ package org.gmol.TranslatingSysTray.translator;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
-import org.gmol.TranslatingSysTray.App;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import fr.idm.sk.publish.api.client.light.SkPublishAPI;
 
 public class Translator {
 
 	private static final String BASEURL = "https://dictionary.cambridge.org";
-	public static String KEY = "";
+	private String KEY = null;
 	private SearchDataSet dataset = new SearchDataSet();
 
-	public Translator() {
-		// TODO Auto-generated constructor stub
+	public Translator(String key) {
+		KEY = key;
 	}
 
 	public String translate(String word) {
@@ -31,17 +29,6 @@ public class Translator {
 		});
 
 		try {
-			// System.out.println("*** Dictionaries ***");
-			// JSONArray dictionaries = new JSONArray(api.getDictionaries());
-			// System.out.println("*** JSONArray dictionaries:");
-			// System.out.println(dictionaries);
-
-			// JSONObject dict = dictionaries.getJSONObject(0);
-			// System.out.println("*** dictionaries.getJSONObject(0):");
-			// System.out.println(dict);
-			// String dictCode = dict.getString("dictionaryCode");
-			// System.out.println("*** dictCode: " + dictCode);
-
 			String dictCode = "british";
 			System.out.println("*** Search result");
 			JSONObject results = new JSONObject(api.search(dictCode, word, 10, 1));
@@ -50,8 +37,18 @@ public class Translator {
 			
 			// System.out.println(results);
 			System.out.println("*** Get entry");
-			String entryId = page.getEntry(0).getEntryLabel();
-			JSONObject getEntryresults = new JSONObject(api.getEntry(dictCode, entryId, "html"));
+			// get entry from a page
+			String entryId = page.getEntry(0).getEntryId();			
+			System.out.println("search for entry:" + entryId);
+			
+			JSONObject getEntryresults;
+//			try {
+				getEntryresults = new JSONObject(api.getEntry(dictCode, entryId, "html"));
+//			} catch (SkPublishAPIException e) {
+//				// TODO Auto-generated catch block
+//				System.out.println("ERROR: Translation of " + entryId + " not found!, ");
+//				e.printStackTrace();
+//			}
 			
 		    return DeJsonizer.dejsonEntry(getEntryresults);
 			// return DeJsonizer.dejsonEntry(getEntryresults);

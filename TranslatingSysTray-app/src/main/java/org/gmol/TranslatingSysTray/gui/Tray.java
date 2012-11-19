@@ -39,11 +39,12 @@ public class Tray implements IGui {
 	SystemTray tray = null;
 	DisplayFrame frame = null;
 	private boolean entered = false;
-	Translator translator = new Translator();
+	Translator translator = null;
 	String prevWord = "";
 	String prevTranstalation = "";
 
-	public Tray() {		
+	public Tray(String key) {		
+		translator = new Translator(key);
 		open();
 	}
 
@@ -59,11 +60,10 @@ public class Tray implements IGui {
 			trayIcon = new TrayIcon(trayImage, TOOLTIP, createMenu());
 			trayIcon.setImageAutoSize(true);
 			try {
+				//
 				tray.add(trayIcon);
-
 				//Create and set up the window.
 		        frame = new DisplayFrame("Translator");	 
-		        
 
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
