@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Page {
-	
-	Page(int totalResultNumber, int totalPageNumber, int currentPageIndex, List<Entry> entries) {
+
+	Page(int totalResultNumber, int totalPageNumber, int currentPageIndex,
+			List<Entry> entries) {
 		this.totalResultNumber = totalResultNumber;
 		this.totalPageNumber = totalPageNumber;
 		this.currentPageIndex = currentPageIndex;
@@ -44,4 +45,13 @@ class Page {
 		return totalResultNumber;
 	}
 
+	ArrayList<String> getEntryLabels() {
+		ArrayList<String> labels = new ArrayList<String>();
+		if (entries.size() > 0) {
+			for (Entry e : entries) {
+				labels.add(e.getEntryLabel());
+			}			
+		} 
+		return labels;
+	}
 }
