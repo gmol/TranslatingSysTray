@@ -15,11 +15,12 @@ public class Translator {
 	private static final String BASEURL = "https://dictionary.cambridge.org";
 	private static final int PAGESIZE = 10;
 	private static final String DICTCODE = "british";
-	
+
 	private SearchDataSet dataset = new SearchDataSet();
 	private int currentPageIndex = 1;
 	private String translatedEntry = "";
 	private SkPublishAPI api;
+	private String word = "";
 
 	public Translator(String key) {
 		DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
@@ -35,43 +36,80 @@ public class Translator {
 
 		System.out.println("Hello World!");
 
-
-
 		try {
-			String dictCode = "british";
 			System.out.println("*** Search result");
-			JSONObject results = new JSONObject(api.search(dictCode, word, PAGESIZE, currentPageIndex));
+			JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
 			Page page = DeJsonizer.dejsonSearch(results);
 			dataset.addPage(page);
-			
-			// System.out.println(results);
-			System.out.println("*** Get entry");
-			// get entry from a page
-			String entryId = page.getEntry(0).getEntryId();			
-			System.out.println("search for entry:" + entryId);
-			
-			JSONObject getEntryresults;
-      		getEntryresults = new JSONObject(api.getEntry(dictCode, entryId, "html"));
-			
-		    translatedEntry = DeJsonizer.dejsonEntry(getEntryresults);
+			this.word = word;
+
+			// // System.out.println(results);
+			// System.out.println("*** Get entry");
+			// // get entry from a page
+			// String entryId = page.getEntry(0).getEntryId();
+			// System.out.println("search for entry:" + entryId);
+			//
+			// JSONObject getEntryresults;
+			// getEntryresults = new JSONObject(api.getEntry(DICTCODE, entryId,
+			// "html"));
+			//
+			// translatedEntry = DeJsonizer.dejsonEntry(getEntryresults);
 		} catch (SkPublishAPIException ex) {
 			throw new TranslatorEx(ex);
-			
+
 		} catch (Throwable t) {
 			t.printStackTrace();
-			throw new TranslatorEx(t);			
+			throw new TranslatorEx(t);
 		}
-	}	
-	
-	String getNextTranslation() throws TranslatorEx {
+	}
+
+	public String getNextTranslation() throws TranslatorEx {
+		System.out.println("Enter: getNextTranslation");
+		Entry e = dataset.getNextEntry();
+		if (e == null) {
+			if (dataset.areAllPagesFetched()) {
+				return null;
+			} else {
+				// mytodo fetch the next page
+				System.out.println("*** Fetch the next page");
+				try {
+					JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
+					Page page = DeJsonizer.dejsonSearch(results);
+					dataset.addPage(page);
+					e = dataset.getNextEntry();
+					if (e == null) {
+						throw new TranslatorEx("A next page has been fetched but the next entry is null");
+					}
+				} catch (Exception ex) {
+					// TODO Auto-generated catch block
+					ex.printStackTrace();
+					throw new TranslatorEx(ex);
+				}
+
+			}
+		}
+		try {
+			if (e.getTranslation().isEmpty()) {
+				JSONObject getEntryresults = new JSONObject(api.getEntry(DICTCODE, e.getEntryId(), "html"));
+				String translation = DeJsonizer.dejsonEntry(getEntryresults);
+				e.setTranslation(translation);
+				return translation;
+			}
+			return e.getTranslation();
+		} catch (Exception e1) {
+			e1.printStackTrace();
+			throw new TranslatorEx(e1);
+		}
+	}
+
+	public String getPreviousTranslation() throws TranslatorEx {
 		Entry e = dataset.getNextEntry();
 		if (e == null) {
 			return null;
 		}
 		try {
 			if (e.getTranslation().isEmpty()) {
-				JSONObject getEntryresults = new JSONObject(api.getEntry(
-						DICTCODE, e.getEntryId(), "html"));
+				JSONObject getEntryresults = new JSONObject(api.getEntry(DICTCODE, e.getEntryId(), "html"));
 				String translation = DeJsonizer.dejsonEntry(getEntryresults);
 				e.setTranslation(translation);
 				return translation;
@@ -83,32 +121,9 @@ public class Translator {
 		} catch (SkPublishAPIException e1) {
 			e1.printStackTrace();
 			throw new TranslatorEx(e1);
-		}		
-	}
-	
-	String getPreviousTranslation() throws TranslatorEx {
-		Entry e = dataset.getNextEntry();
-		if (e == null) {
-			return null;
 		}
-		try {
-			if (e.getTranslation().isEmpty()) {
-				JSONObject getEntryresults = new JSONObject(api.getEntry(
-						DICTCODE, e.getEntryId(), "html"));
-				String translation = DeJsonizer.dejsonEntry(getEntryresults);
-				e.setTranslation(translation);
-				return translation;
-			}
-			return e.getTranslation();
-		} catch (JSONException e1) {
-			e1.printStackTrace();
-			throw new TranslatorEx(e1);
-		} catch (SkPublishAPIException e1) {
-			e1.printStackTrace();
-			throw new TranslatorEx(e1);
-		}		
 	}
-	
+
 	public ArrayList<String> getEntryLabels() {
 		return dataset.getEntryLabels();
 	}

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -23,6 +24,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import org.gmol.TranslatingSysTray.translator.Translator;
+import org.gmol.TranslatingSysTray.translator.TranslatorEx;
 
 ;
 
@@ -68,6 +70,72 @@ public class Tray implements IGui {
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
 			}
+			
+			frame.addMouseMotionListener(new MouseMotionListener() {
+				
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// TODO Auto-generated method stub
+					System.out.println(e);
+					
+				}
+				
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					// TODO Auto-generated method stub
+					System.out.println(e);
+					
+				}
+			});
+			
+			frame.addMouseListener(new MouseAdapter() {
+				public void mousePressed(MouseEvent e) {
+					System.out.println(e);
+					super.mousePressed(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					System.out.println(e);
+					int buttonPressed = e.getButton();
+					int clickCount = e.getClickCount();
+					switch (buttonPressed) {
+					case MouseEvent.BUTTON1:
+						System.out.println("butt 1");
+						if (clickCount == 1) {
+
+						} else if (clickCount >= 2) {
+
+						}
+						break;
+					case MouseEvent.BUTTON2:
+						System.out.println("butt 2");
+						if (clickCount == 1) {
+
+						} else if (clickCount >= 2) {
+
+						}
+						break;
+					case MouseEvent.BUTTON3:
+						System.out.println("butt 3");
+						if (clickCount == 1) {
+
+						} else if (clickCount >= 2) {
+
+						}
+						break;
+					default:
+						break;
+					}
+					super.mouseClicked(e);
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					super.mouseReleased(e);
+				}
+			});
 
 			trayIcon.addMouseListener(new MouseAdapter() {
 				public void mousePressed(MouseEvent e) {
@@ -76,6 +144,7 @@ public class Tray implements IGui {
 					int clickCount = e.getClickCount();
 					switch (buttonPressed) {
 					case MouseEvent.BUTTON1:
+						System.out.println("butt 1");
 						if (clickCount == 1) {
 
 						} else if (clickCount >= 2) {
@@ -83,6 +152,7 @@ public class Tray implements IGui {
 						}
 						break;
 					case MouseEvent.BUTTON2:
+						System.out.println("butt 2");
 						if (clickCount == 1) {
 
 						} else if (clickCount >= 2) {
@@ -90,6 +160,7 @@ public class Tray implements IGui {
 						}
 						break;
 					case MouseEvent.BUTTON3:
+						System.out.println("butt 3");
 						if (clickCount == 1) {
 
 						} else if (clickCount >= 2) {
@@ -123,7 +194,16 @@ public class Tray implements IGui {
 							word = prevTranstalation;
 						} else {
 							prevWord = word;
-							prevTranstalation = word = translator.translate(word);							
+//							try {
+//								//mytodo uncomment
+//								translator.translate(word);
+//								word = translator.getNextTranslation();
+								
+//							} catch (TranslatorEx e1) {
+//								// TODO Auto-generated catch block
+//								e1.printStackTrace();
+//							}
+							prevTranstalation = word;							
 						}
 						System.out.println("entered is false set it to true");
 						entered = true;

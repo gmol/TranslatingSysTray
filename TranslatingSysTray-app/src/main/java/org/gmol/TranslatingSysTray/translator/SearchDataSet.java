@@ -6,17 +6,40 @@ import java.util.List;
 public class SearchDataSet extends DataSet {
 	//
 	int currentEntryIndex = 0;
-	int total = 0;
+	int totalFetchedEntryCount = 0;
 	List<Page> pageList = new ArrayList<Page>();
+	Page lastPageAdded = null;
+	
+	int getCurrentEntryIndex() {
+		return currentEntryIndex;
+	}
+	
+	int getTotalPageNumber() {
+		return lastPageAdded.getTotalPageNumber();
+	}
+	
+	int getTotalResultNumber() {
+		return lastPageAdded.getTotalResultNumber();				
+	}
+	
+	int getCurrentPageIndex() {
+		return lastPageAdded.getCurrentPageIndex();
+	}
+	
+	boolean areAllPagesFetched() {
+		int lastFetchedPage = lastPageAdded.getCurrentPageIndex();
+		return ((lastFetchedPage + 1) == lastPageAdded.getTotalPageNumber());
+	}
 
 	void addPage(Page page) {
-		total += page.getEntryCount();
+		totalFetchedEntryCount += page.getEntryCount();
+		lastPageAdded = page;
 		pageList.add(page);
 	}
 
 	Entry getNextEntry() {
-		if (total > 0) {
-			if (currentEntryIndex < total) {
+		if (totalFetchedEntryCount > 0) {
+			if (currentEntryIndex < totalFetchedEntryCount) {
 				int tmpTotal = 0;
 				for (Page p : pageList) {
 					tmpTotal += p.getEntryCount();
@@ -32,7 +55,7 @@ public class SearchDataSet extends DataSet {
 	}
 	
 	Entry getPrevEntry() {
-		if (total > 0) {
+		if (totalFetchedEntryCount > 0) {
 			if ((currentEntryIndex-1) >= 0 ) {
 				currentEntryIndex--;
 				int tmpTotal = 0;
