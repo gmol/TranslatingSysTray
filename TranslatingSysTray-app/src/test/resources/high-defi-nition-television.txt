@@ -1,0 +1,228 @@
+{
+    "resultNumber": 4,
+    "results": [
+        {
+            "entryLabel": "definition noun  EXPLAIN ",
+            "entryUrl": "http://dictionary.cambridge.org/dictionary/british/definition_1",
+            "entryId": "definition_1"
+        },
+        {
+            "entryLabel": "definition noun  CLEARLY SHOW ",
+            "entryUrl": "http://dictionary.cambridge.org/dictionary/british/definition_2",
+            "entryId": "definition_2"
+        },
+        {
+            "entryLabel": "high definition television noun",
+            "entryUrl": "http://dictionary.cambridge.org/dictionary/british/high-defi-nition-television",
+            "entryId": "high-defi-nition-television"
+        },
+        {
+            "entryLabel": "by definition",
+            "entryUrl": "http://dictionary.cambridge.org/dictionary/british/definition_1",
+            "entryId": "definition_1"
+        }
+    ],
+    "dictionaryCode": "british",
+    "currentPageIndex": 1,
+    "pageNumber": 1
+}
+-------------------------------------------------------------------------------
+{
+    "topics": [
+        {
+            "topicLabel": "Reasons and explanations",
+            "topicThesaurusName": "topics",
+            "topicUrl": "http://dictionary.cambridge.org/topics/reasons-and-explanations/",
+            "topicId": "reasons-and-explanations",
+            "topicParentId": "__root__"
+        }
+    ],
+    "dictionaryCode": "british",
+    "entryLabel": "definition",
+    "entryContent": "<article class=\"entry\">
+<header>
+<h1 class=\"hw\">definition </h1>
+<span class=\"info\">
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the US pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/us_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/us_pron/d/def/defin/definition.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/us_pron_ogg/d/def/defin/definition.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the UK pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/uk_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron/u/ukd/ukdef/ukdefil006.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron_ogg/u/ukd/ukdef/ukdefil006.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<span class=\"pron\">
+<span class=\"ipa\">/ˌdef.ɪˈnɪʃ.<sup>ə</sup>n/</span>
+</span>
+<span class=\"posgram\"> <span class=\"pos\"> noun</span> </span>
+<span class=\"gw\"> EXPLAIN </span>
+</span>
+</header>
+<section class=\"senseGrp\">
+<section class=\"senseEntry\">
+<span class=\"definition\">
+<span class=\"info\">
+<span class=\"lvl\">I</span> <span class=\"gram\">
+<span class=\"gcs\">[<span class=\"gc\">C</span>]</span>
+</span> </span>
+<span class=\"def\">a statement that explains the meaning of a word or phrase</span>
+</span>
+<span class=\"examp\">
+<span class=\"eg\">a dictionary definition</span>
+</span>
+<span class=\"examp\">
+<span class=\"eg\">What is the definition <span class=\"cl\">of</span> 'mood'?</span>
+</span>
+</section>
+<section class=\"senseEntry\">
+<span class=\"definition\">
+<span class=\"info\">
+<span class=\"lvl\">I</span> <span class=\"gram\">
+<span class=\"gcs\">[<span class=\"gc\">C</span>]</span>
+</span> </span>
+<span class=\"def\">a description of the features and limits of something</span>
+</span>
+<span class=\"examp\">
+<span class=\"eg\">The legal definition <span class=\"cl\">of</span> what is and what is not pornography is very unsatisfactory.</span>
+</span>
+</section>
+<section class=\"phrGrp\">
+<section class=\"phrEntry\">
+<header>
+<h2 class=\"phrHwd\">by definition </h2>
+</header>
+<section class=\"senseEntry\">
+<span class=\"definition\">
+<span class=\"info\">
+<span class=\"lvl\">›</span> </span>
+<span class=\"def\">because of its own features</span>
+</span>
+<span class=\"examp\">
+<span class=\"eg\">Psychology is by definition an inexact science.</span>
+</span>
+</section>
+</section>
+</section>
+</section>
+<footer>
+<small>(Definition of definition  from the <a href=\"https://dictionary.cambridge.org/dictionary/british/\" title=\"Cambridge Advanced Learner's Dictionary &amp; Thesaurus\">Cambridge Advanced Learner's Dictionary &amp; Thesaurus</a> © Cambridge University Press)</small>
+</footer>
+</article>\n",
+    "entryUrl": "http://dictionary.cambridge.org/dictionary/british/definition_1",
+    "format": "html",
+    "entryId": "definition_1"
+}
+-------------------------------------------------------------------------------
+{
+    "topics": [
+        {
+            "topicLabel": "Photography",
+            "topicThesaurusName": "topics",
+            "topicUrl": "http://dictionary.cambridge.org/topics/photography/",
+            "topicId": "photography",
+            "topicParentId": "__root__"
+        }
+    ],
+    "dictionaryCode": "british",
+    "entryLabel": "definition",
+    "entryContent": "<article class=\"entry\">
+<header>
+<h1 class=\"hw\">definition </h1>
+<span class=\"info\">
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the US pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/us_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/us_pron/d/def/defin/definition.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/us_pron_ogg/d/def/defin/definition.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the UK pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/uk_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron/u/ukd/ukdef/ukdefil006.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron_ogg/u/ukd/ukdef/ukdefil006.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<span class=\"pron\">
+<span class=\"ipa\">/ˌdef.ɪˈnɪʃ.<sup>ə</sup>n/</span>
+</span>
+<span class=\"posgram\"> <span class=\"pos\"> noun</span> </span>
+<span class=\"gw\"> CLEARLY SHOW </span>
+</span>
+</header>
+<section class=\"senseGrp\">
+<section class=\"senseEntry\">
+<span class=\"definition\">
+<span class=\"info\">
+<span class=\"lvl\">›</span> <span class=\"gram\">
+<span class=\"gcs\">[<span class=\"gc\">U</span>]</span>
+</span> </span>
+<span class=\"def\">how clear an image or sound is</span>
+</span>
+<span class=\"examp\">
+<span class=\"eg\">The photograph rather lacks definition.</span>
+</span>
+</section>
+</section>
+<footer>
+<small>(Definition of definition  from the <a href=\"https://dictionary.cambridge.org/dictionary/british/\" title=\"Cambridge Advanced Learner's Dictionary &amp; Thesaurus\">Cambridge Advanced Learner's Dictionary &amp; Thesaurus</a> © Cambridge University Press)</small>
+</footer>
+</article>\n",
+    "entryUrl": "http://dictionary.cambridge.org/dictionary/british/definition_2",
+    "format": "html",
+    "entryId": "definition_2"
+}
+-------------------------------------------------------------------------------
+{
+    "topics": [
+        {
+            "topicLabel": "Television",
+            "topicThesaurusName": "topics",
+            "topicUrl": "http://dictionary.cambridge.org/topics/television/",
+            "topicId": "television",
+            "topicParentId": "__root__"
+        }
+    ],
+    "dictionaryCode": "british",
+    "entryLabel": "high definition television",
+    "entryContent": "<article class=\"entry\">
+<header>
+<h1 class=\"hw\">high definition television </h1>
+<span class=\"info\">
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the US pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/us_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/us_pron/u/usa/usa33/usa33273.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/us_pron_ogg/u/usa/usa33/usa33273.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<a class=\"playback\" href=\"#\">
+<img alt=\"Click to hear the UK pronunciation of this word\" src=\"https://dictionary.cambridge.org/external/images/uk_pron.png?version=2012-11-22-1420\"/>
+</a>
+<audio>
+<source type=\"audio/mpeg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron/u/uka/uka33/uka33273.mp3\"/>
+<source type=\"audio/ogg\" src=\"https://dictionary.cambridge.org/media/british/uk_pron_ogg/u/uka/uka33/uka33273.ogg\"/>Your browser does not support HTML5 audio.</audio>
+<span class=\"posgram\"> <span class=\"pos\"> noun</span> <span class=\"gram\">
+<span class=\"gcs\">[<span class=\"gc\">U</span>]</span>
+</span> </span>
+</span>
+</header>
+<section class=\"senseGrp\">
+<section class=\"senseEntry\">
+<span class=\"definition\">
+<span class=\"info\">
+<span class=\"lvl\">›</span> </span>
+<span class=\"def\">a system which produces very good quality television images in greater detail than ordinary systems</span>
+</span>
+</section>
+</section>
+<footer>
+<small>(Definition of high definition television  from the <a href=\"https://dictionary.cambridge.org/dictionary/british/\" title=\"Cambridge Advanced Learner's Dictionary &amp; Thesaurus\">Cambridge Advanced Learner's Dictionary &amp; Thesaurus</a> © Cambridge University Press)</small>
+</footer>
+</article>\n",
+    "entryUrl": "http://dictionary.cambridge.org/dictionary/british/high-defi-nition-television",
+    "format": "html",
+    "entryId": "high-defi-nition-television"
+}
+-------------------------------------------------------------------------------

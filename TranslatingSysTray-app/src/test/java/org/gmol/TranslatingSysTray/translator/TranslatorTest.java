@@ -26,7 +26,7 @@ public class TranslatorTest extends TestCase {
         /**
          * Rigourous Test :-)
          */
-        public void testApp() {
+        public void testTranslator() {
                 assertTrue(true);
         }
 }
