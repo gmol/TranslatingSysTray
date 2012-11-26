@@ -40,7 +40,8 @@ public class Translator {
 			System.out.println("*** Search result");
 			currentPageIndex = 1;
 			JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
-			Page page = DeJsonizer.dejsonSearch(results);
+			Page page = DeJsonizer.dejsonSearch(results);			
+			dataset = new SearchDataSet();
 			dataset.addPage(page);
 			this.word = word;
 

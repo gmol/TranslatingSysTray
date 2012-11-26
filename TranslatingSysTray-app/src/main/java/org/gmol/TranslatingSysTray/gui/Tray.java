@@ -30,7 +30,7 @@ public class Tray implements IGui {
 
 	private static final String TOOLTIP = "tray test";
 	public static final String IMAGE = "/usr/share/pixmaps/gnome-gmush.png";
-	public static final int DELAY = (5 * 1000);
+	public static final int DELAY = (3 * 1000);
 	TrayIcon trayIcon = null;
 	SystemTray tray = null;
 	DisplayFrame frame = null;
@@ -83,6 +83,8 @@ public class Tray implements IGui {
 								e1.printStackTrace();
 							}
 						} else if (clickCount >= 2) {
+							frame.setVisible(false);
+							frame.setAlwaysOnTop(false);
 						}
 						break;
 					case MouseEvent.BUTTON2: //middle button
@@ -142,11 +144,11 @@ public class Tray implements IGui {
 
 			trayIcon.addMouseMotionListener(new MouseAdapter() {
 				public void mouseMoved(MouseEvent e) {
-					System.out.println("Mouse entered");
 					if (!entered) {					
 						String word = getClipboard();
-//						System.out.println("prev word(" + prevWord + ") word(" + word + ")");
+						System.out.println("prev word(" + prevWord + ") word(" + word + ")");
 						if (prevWord.equals(word)) {
+							System.out.println("prevWord.equals(word)");
 							word = prevTranstalation;
 						} else {
 							prevWord = word;
@@ -154,25 +156,32 @@ public class Tray implements IGui {
 								// mytodo uncomment
 								translator.translate(word);
 								word = translator.getNextTranslation();
-
+								prevTranstalation = word;								
 							} catch (TranslatorEx e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
-							prevTranstalation = word;
 						}
 						System.out.println("entered is false set it to true");
 						entered = true;
-						frame.setVisible(entered);
+						frame.setVisible(entered);						
 						setText(word);
+						java.awt.EventQueue.invokeLater(new Runnable() {
+						    @Override
+						    public void run() {						    	
+								frame.setState (java.awt.Frame.NORMAL);
+								frame.setAlwaysOnTop(true);
+						        frame.toFront();
+						        frame.repaint();
+						    }
+						});
 
 						long delay = DELAY;
 						new java.util.Timer().schedule(new TimerTask() {
 							public void run() {
 								System.out
 										.println("TimerTask: Set entered to false");
-								entered = false;
-//								frame.setVisible(entered);
+								entered = false;								
 							}
 						}, delay);
 						System.out.println(e);

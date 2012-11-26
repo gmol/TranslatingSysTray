@@ -25,6 +25,11 @@ public class SearchDataSet extends DataSet {
 	int getCurrentPageIndex() {
 		return lastPageAdded.getCurrentPageIndex();
 	}
+	
+	int fetchEntryCount() {
+		return totalFetchedEntryCount;
+	}
+	
 
 	boolean areAllPagesFetched() {
 		System.out.println("Enter: areAllPagesFetched");
