@@ -1,7 +1,6 @@
 package org.gmol.TranslatingSysTray.gui;
 
 import java.awt.AWTException;
-import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
@@ -16,12 +15,7 @@ import java.awt.event.MouseMotionListener;
 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTextPane;
 
 import org.gmol.TranslatingSysTray.translator.Translator;
 import org.gmol.TranslatingSysTray.translator.TranslatorEx;
@@ -69,71 +63,50 @@ public class Tray implements IGui {
 
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
-			}
-			
-			frame.addMouseMotionListener(new MouseMotionListener() {
-				
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println(e);
-					
-				}
-				
-				@Override
-				public void mouseDragged(MouseEvent e) {
-					// TODO Auto-generated method stub
-					System.out.println(e);
-					
-				}
-			});
-			
-			frame.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					System.out.println(e);
-					super.mousePressed(e);
-				}
+			}			
 
-				@Override
+			System.out.println("Add frame mouse listener");
+			frame.addMouseListener(new MouseAdapter() {
+		        @Override
 				public void mouseClicked(MouseEvent e) {
 					System.out.println(e);
 					int buttonPressed = e.getButton();
 					int clickCount = e.getClickCount();
 					switch (buttonPressed) {
-					case MouseEvent.BUTTON1:
-						System.out.println("butt 1");
+					case MouseEvent.BUTTON1: // left button
+						System.out.println("butt 1"); 
 						if (clickCount == 1) {
-
+							try {
+								setText(translator.getNextTranslation());
+							} catch (TranslatorEx e1) {
+								// MYTODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						} else if (clickCount >= 2) {
-
 						}
 						break;
-					case MouseEvent.BUTTON2:
+					case MouseEvent.BUTTON2: //middle button
 						System.out.println("butt 2");
 						if (clickCount == 1) {
-
 						} else if (clickCount >= 2) {
-
 						}
 						break;
-					case MouseEvent.BUTTON3:
+					case MouseEvent.BUTTON3: // rigth button
 						System.out.println("butt 3");
 						if (clickCount == 1) {
-
+							try {
+								setText(translator.getPreviousTranslation());
+							} catch (TranslatorEx e1) {
+								// MYTODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						} else if (clickCount >= 2) {
-
 						}
 						break;
 					default:
 						break;
 					}
 					super.mouseClicked(e);
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					super.mouseReleased(e);
 				}
 			});
 
@@ -146,47 +119,30 @@ public class Tray implements IGui {
 					case MouseEvent.BUTTON1:
 						System.out.println("butt 1");
 						if (clickCount == 1) {
-
 						} else if (clickCount >= 2) {
-
 						}
 						break;
 					case MouseEvent.BUTTON2:
 						System.out.println("butt 2");
 						if (clickCount == 1) {
-
 						} else if (clickCount >= 2) {
-
 						}
 						break;
 					case MouseEvent.BUTTON3:
 						System.out.println("butt 3");
 						if (clickCount == 1) {
-
 						} else if (clickCount >= 2) {
-
 						}
 						break;
 					default:
 						break;
 					}
 				}
-
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					super.mouseClicked(e);
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
-					super.mouseReleased(e);
-				}
 			});
 
 			trayIcon.addMouseMotionListener(new MouseAdapter() {
 				public void mouseMoved(MouseEvent e) {
+					System.out.println("Mouse entered");
 					if (!entered) {					
 						String word = getClipboard();
 //						System.out.println("prev word(" + prevWord + ") word(" + word + ")");
@@ -194,16 +150,16 @@ public class Tray implements IGui {
 							word = prevTranstalation;
 						} else {
 							prevWord = word;
-//							try {
-//								//mytodo uncomment
-//								translator.translate(word);
-//								word = translator.getNextTranslation();
-								
-//							} catch (TranslatorEx e1) {
-//								// TODO Auto-generated catch block
-//								e1.printStackTrace();
-//							}
-							prevTranstalation = word;							
+							try {
+								// mytodo uncomment
+								translator.translate(word);
+								word = translator.getNextTranslation();
+
+							} catch (TranslatorEx e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							prevTranstalation = word;
 						}
 						System.out.println("entered is false set it to true");
 						entered = true;
@@ -251,8 +207,6 @@ public class Tray implements IGui {
 	@Override
 	public void setText(String txt) {
 		System.out.println(txt);
-		System.out.println("Get clipboard:");
-		System.out.println(getClipboard());
 		frame.setText(txt);
 	}
 

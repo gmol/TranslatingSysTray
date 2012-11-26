@@ -48,7 +48,7 @@ import org.json.*;
 class DeJsonizer {
 
 	public static Page dejsonSearch(JSONObject search) throws Exception {
-
+		System.out.println("dejsonSearch");
 		int totalResultNumber = (Integer) search.get("resultNumber");
 		System.out.println("Total Result Number: " + totalResultNumber);
 		int pageNumber = (Integer) search.get("pageNumber");
@@ -58,6 +58,7 @@ class DeJsonizer {
 		// loop array
 		JSONArray results = (JSONArray) search.get("results");
 		int resultNumber = results.length();
+		System.out.println("Number of results fetched: " + resultNumber);
 		java.util.List<Entry> entries = new ArrayList<Entry>();
 		for (int i = 0; i < results.length(); i++) {
 

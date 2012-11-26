@@ -1,24 +1,16 @@
 package org.gmol.TranslatingSysTray.gui;
 
 import java.awt.BorderLayout;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.io.IOException;
-import java.net.MalformedURLException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyleContext;
-import javax.swing.text.StyledDocument;
 
 public class DisplayFrame extends JFrame {
 
@@ -60,11 +52,16 @@ public class DisplayFrame extends JFrame {
 
 		pack();
 	}
+	
+	@Override
+	public synchronized void addMouseListener(MouseListener l) {
+		textPane.addMouseListener(l);
+	}
 
 	private JEditorPane createEditorPane() {
 		JEditorPane editorPane = new JEditorPane();
+		
 		editorPane.setEditable(false);
-
 		editorPane.setText("www.wp.pl");
 
 		// java.net.URL helpURL = null;

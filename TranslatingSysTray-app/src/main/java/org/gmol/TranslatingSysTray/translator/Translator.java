@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+//mytodo check how it can be fixed
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +19,6 @@ public class Translator {
 
 	private SearchDataSet dataset = new SearchDataSet();
 	private int currentPageIndex = 1;
-	private String translatedEntry = "";
 	private SkPublishAPI api;
 	private String word = "";
 
@@ -34,10 +34,11 @@ public class Translator {
 
 	public void translate(String word) throws TranslatorEx {
 
-		System.out.println("Hello World!");
+		System.out.println("--------------------------translate(" + word + ")");
 
 		try {
 			System.out.println("*** Search result");
+			currentPageIndex = 1;
 			JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
 			Page page = DeJsonizer.dejsonSearch(results);
 			dataset.addPage(page);
@@ -65,14 +66,19 @@ public class Translator {
 
 	public String getNextTranslation() throws TranslatorEx {
 		System.out.println("Enter: getNextTranslation");
-		Entry e = dataset.getNextEntry();
+		Entry e = dataset.getNextEntry();		
 		if (e == null) {
+			System.out.println("Entry is NULL");
 			if (dataset.areAllPagesFetched()) {
+				System.out.println("all pages are fetch, return null");
 				return null;
 			} else {
 				// mytodo fetch the next page
 				System.out.println("*** Fetch the next page");
 				try {
+					if (word.isEmpty()) {
+						return "ERROR: you are trying to translated an empty word";						
+					}
 					JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
 					Page page = DeJsonizer.dejsonSearch(results);
 					dataset.addPage(page);
@@ -88,10 +94,12 @@ public class Translator {
 
 			}
 		}
+		System.out.println("Print entry: " + e.toString());
 		try {
 			if (e.getTranslation().isEmpty()) {
 				JSONObject getEntryresults = new JSONObject(api.getEntry(DICTCODE, e.getEntryId(), "html"));
 				String translation = DeJsonizer.dejsonEntry(getEntryresults);
+				System.out.println("translation: " + translation);
 				e.setTranslation(translation);
 				return translation;
 			}
@@ -103,7 +111,7 @@ public class Translator {
 	}
 
 	public String getPreviousTranslation() throws TranslatorEx {
-		Entry e = dataset.getNextEntry();
+		Entry e = dataset.getPrevEntry();
 		if (e == null) {
 			return null;
 		}
@@ -114,6 +122,7 @@ public class Translator {
 				e.setTranslation(translation);
 				return translation;
 			}
+			System.out.println("Print entry: " + e.toString());
 			return e.getTranslation();
 		} catch (JSONException e1) {
 			e1.printStackTrace();

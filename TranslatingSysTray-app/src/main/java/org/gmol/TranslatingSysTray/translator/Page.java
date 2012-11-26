@@ -27,6 +27,8 @@ class Page {
 	}
 
 	Entry getEntry(int index) {
+		System.out.println("getEntry(" + index+ "), entries.size = " + entries.size());
+		
 		if (index < 0 || index >= entries.size()) {
 			return null;
 		}
