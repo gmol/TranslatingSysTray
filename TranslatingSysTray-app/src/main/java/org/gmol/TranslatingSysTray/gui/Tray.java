@@ -90,6 +90,8 @@ public class Tray implements IGui {
 					case MouseEvent.BUTTON2: //middle button
 						System.out.println("butt 2");
 						if (clickCount == 1) {
+							frame.setVisible(false);
+							frame.setAlwaysOnTop(false);
 						} else if (clickCount >= 2) {
 						}
 						break;
