@@ -78,6 +78,8 @@ class DeJsonizer {
 	public static String dejsonEntry(JSONObject entry) throws JSONException {
 		String entryContent = null;
 		entryContent = (String) entry.get("entryContent");
+		String header = "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n";
+		entryContent = header.concat(entryContent);
 		return entryContent;
 	}
 
