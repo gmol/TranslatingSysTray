@@ -2,6 +2,8 @@ package org.gmol.TranslatingSysTray.translator;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.log4j.Logger;
 import org.json.*;
 
 /*
@@ -46,29 +48,31 @@ import org.json.*;
  */
 
 class DeJsonizer {
+	
+	private static final Logger LOGGER = Logger.getLogger(DeJsonizer.class);
 
 	public static Page dejsonSearch(JSONObject search) throws Exception {
-		System.out.println("dejsonSearch");
+		LOGGER.debug("dejsonSearch");
 		int totalResultNumber = (Integer) search.get("resultNumber");
-		System.out.println("Total Result Number: " + totalResultNumber);
+		LOGGER.debug("Total Result Number: " + totalResultNumber);
 		int pageNumber = (Integer) search.get("pageNumber");
-		System.out.println("Page number:" + pageNumber);
+		LOGGER.debug("Page number:" + pageNumber);
 		int currentPageIndex = (Integer) search.get("currentPageIndex");
-		System.out.println("Current Page index:" + currentPageIndex);
+		LOGGER.debug("Current Page index:" + currentPageIndex);
 		// loop array
 		JSONArray results = (JSONArray) search.get("results");
 		int resultNumber = results.length();
-		System.out.println("Number of results fetched: " + resultNumber);
+		LOGGER.debug("Number of results fetched: " + resultNumber);
 		java.util.List<Entry> entries = new ArrayList<Entry>();
 		for (int i = 0; i < results.length(); i++) {
 
 			JSONObject o = (JSONObject) results.get(i);
 
 			String entryLabel = (String) o.get("entryLabel");
-			System.out.println("entryLabel: " + entryLabel);
+			LOGGER.debug("entryLabel: " + entryLabel);
 
 			String entryId = (String) o.get("entryId");
-			System.out.println("entryId: " + entryId);
+			LOGGER.debug("entryId: " + entryId);
 
 			entries.add(new Entry(entryId, entryLabel));
 		}

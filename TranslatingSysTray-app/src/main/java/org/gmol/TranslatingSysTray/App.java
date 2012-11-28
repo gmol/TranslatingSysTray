@@ -1,11 +1,14 @@
 package org.gmol.TranslatingSysTray;
 
-import org.gmol.TranslatingSysTray.gui.Tray; 
+import org.gmol.TranslatingSysTray.gui.Tray;
+import org.apache.log4j.Logger;
 
 /**
  * 
  */
 public class App {
+	
+	private static final Logger LOGGER = Logger.getLogger(App.class);
 	
 	public String key;
 	
@@ -26,9 +29,10 @@ public class App {
 	
 	public static void main(String[] args) {		
 		for (String string : args) {
-			System.out.println("args: " + string);
+			LOGGER.info("args: " + string);
 		}
 		String key = args[0];
+		LogConfig.configureLogging("log4j.properties");
 		new App(key);	
 	}
 }

@@ -3,8 +3,12 @@ package org.gmol.TranslatingSysTray.translator;
 import java.util.ArrayList;
 import java.util.List;
 
-class Page {
+import org.apache.log4j.Logger;
 
+class Page {
+	
+	private static final Logger LOGGER = Logger.getLogger(Page.class);
+	
 	Page(int totalResultNumber, int totalPageNumber, int currentPageIndex,
 			List<Entry> entries) {
 		this.totalResultNumber = totalResultNumber;
@@ -27,7 +31,7 @@ class Page {
 	}
 
 	Entry getEntry(int index) {
-		System.out.println("getEntry(" + index+ "), entries.size = " + entries.size());
+		LOGGER.debug("getEntry(" + index+ "), entries.size = " + entries.size());
 		
 		if (index < 0 || index >= entries.size()) {
 			return null;

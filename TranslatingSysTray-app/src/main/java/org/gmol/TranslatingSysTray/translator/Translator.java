@@ -6,6 +6,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 //mytodo check how it can be fixed
 import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.log4j.Logger;
+import org.gmol.TranslatingSysTray.App;
 import org.json.JSONException;
 import org.json.JSONObject;
 import fr.idm.sk.publish.api.client.light.SkPublishAPI;
@@ -13,6 +15,7 @@ import fr.idm.sk.publish.api.client.light.SkPublishAPIException;
 
 public class Translator {
 
+	private static final Logger LOGGER = Logger.getLogger(Translator.class);
 	private static final String BASEURL = "https://dictionary.cambridge.org";
 	private static final int PAGESIZE = 10;
 	private static final String DICTCODE = "british";
@@ -27,17 +30,17 @@ public class Translator {
 		api = new SkPublishAPI(BASEURL + "/api/v1", key, httpClient);
 		api.setRequestHandler(new SkPublishAPI.RequestHandler() {
 			public void prepareGetRequest(HttpGet request) {
-				System.out.println("*** Request: " + request.getURI());
+				LOGGER.debug("*** Request: " + request.getURI());
 			}
 		});
 	}
 
 	public void translate(String word) throws TranslatorEx {
 
-		System.out.println("--------------------------translate(" + word + ")");
+		LOGGER.debug("--------------------------translate(" + word + ")");
 
 		try {
-			System.out.println("*** Search result");
+			LOGGER.debug("*** Search result");
 			currentPageIndex = 1;
 			JSONObject results = new JSONObject(api.search(DICTCODE, word, PAGESIZE, currentPageIndex++));
 			Page page = DeJsonizer.dejsonSearch(results);			
@@ -45,11 +48,11 @@ public class Translator {
 			dataset.addPage(page);
 			this.word = word;
 
-			// // System.out.println(results);
-			// System.out.println("*** Get entry");
+			// // LOGGER.debug(results);
+			// LOGGER.debug("*** Get entry");
 			// // get entry from a page
 			// String entryId = page.getEntry(0).getEntryId();
-			// System.out.println("search for entry:" + entryId);
+			// LOGGER.debug("search for entry:" + entryId);
 			//
 			// JSONObject getEntryresults;
 			// getEntryresults = new JSONObject(api.getEntry(DICTCODE, entryId,
@@ -66,16 +69,16 @@ public class Translator {
 	}
 
 	public String getNextTranslation() throws TranslatorEx {
-		System.out.println("Enter: getNextTranslation");
+		LOGGER.debug("Enter: getNextTranslation");
 		Entry e = dataset.getNextEntry();		
 		if (e == null) {
-			System.out.println("Entry is NULL");
+			LOGGER.debug("Entry is NULL");
 			if (dataset.areAllPagesFetched()) {
-				System.out.println("all pages are fetch, return null");
+				LOGGER.debug("all pages are fetch, return null");
 				return null;
 			} else {
 				// mytodo fetch the next page
-				System.out.println("*** Fetch the next page");
+				LOGGER.debug("*** Fetch the next page");
 				try {
 					if (word.isEmpty()) {
 						return "ERROR: you are trying to translated an empty word";						
@@ -95,12 +98,12 @@ public class Translator {
 
 			}
 		}
-		System.out.println("Print entry: " + e.toString());
+		LOGGER.debug("Print entry: " + e.toString());
 		try {
 			if (e.getTranslation().isEmpty()) {
 				JSONObject getEntryresults = new JSONObject(api.getEntry(DICTCODE, e.getEntryId(), "html"));
 				String translation = DeJsonizer.dejsonEntry(getEntryresults);
-				System.out.println("translation: " + translation);
+				LOGGER.debug("translation: " + translation);
 				e.setTranslation(translation);
 				return translation;
 			}
@@ -123,7 +126,7 @@ public class Translator {
 				e.setTranslation(translation);
 				return translation;
 			}
-			System.out.println("Print entry: " + e.toString());
+			LOGGER.debug("Print entry: " + e.toString());
 			return e.getTranslation();
 		} catch (JSONException e1) {
 			e1.printStackTrace();

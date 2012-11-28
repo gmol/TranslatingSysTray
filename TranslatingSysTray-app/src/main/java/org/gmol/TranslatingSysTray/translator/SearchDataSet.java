@@ -3,7 +3,11 @@ package org.gmol.TranslatingSysTray.translator;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 public class SearchDataSet extends DataSet {
+	
+	private static final Logger LOGGER = Logger.getLogger(SearchDataSet.class);
 	//
 	int currentEntryIndex = -1;
 	int totalFetchedEntryCount = 0;
@@ -32,32 +36,32 @@ public class SearchDataSet extends DataSet {
 	
 
 	boolean areAllPagesFetched() {
-		System.out.println("Enter: areAllPagesFetched");
+		LOGGER.debug("Enter: areAllPagesFetched");
 		if (lastPageAdded == null)
 			return false;
 		int lastFetchedPage = lastPageAdded.getCurrentPageIndex();
 		// mytodo remove
 		if ((lastFetchedPage + 1) == lastPageAdded.getTotalPageNumber()) {
-			System.out.println("All pages fetched");
+			LOGGER.debug("All pages fetched");
 		} else {
-			System.out.println("Not all pages fetched");
+			LOGGER.debug("Not all pages fetched");
 		}
 		return ((lastFetchedPage + 1) == lastPageAdded.getTotalPageNumber());
 	}
 
 	void addPage(Page page) {
-		System.out.println("addPage(Page page)");
+		LOGGER.debug("addPage(Page page)");
 		totalFetchedEntryCount += page.getEntryCount();
-		System.out.println("totalFetchedEntryCount=" + totalFetchedEntryCount);
+		LOGGER.debug("totalFetchedEntryCount=" + totalFetchedEntryCount);
 		lastPageAdded = page;
 		pageList.add(page);
 	}
 
 	Entry getNextEntry() {
-		System.out.println("getNextEntry: totalFetchedEntryCount="
+		LOGGER.debug("getNextEntry: totalFetchedEntryCount="
 				+ totalFetchedEntryCount);
 		if (totalFetchedEntryCount > 0) {
-			System.out.println("currentEntryIndex=" + currentEntryIndex);
+			LOGGER.debug("currentEntryIndex=" + currentEntryIndex);
 			currentEntryIndex++;
 			return getEntry();
 		}
