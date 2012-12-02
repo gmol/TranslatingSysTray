@@ -37,7 +37,7 @@ public class Translator {
 
 	public void translate(String word) throws TranslatorEx {
 
-		LOGGER.debug("--------------------------translate(" + word + ")");
+		LOGGER.debug("---translate(" + word + ")");
 
 		try {
 			LOGGER.debug("*** Search result");

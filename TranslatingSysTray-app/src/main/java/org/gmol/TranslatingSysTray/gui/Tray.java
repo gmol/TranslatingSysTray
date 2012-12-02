@@ -31,7 +31,8 @@ public class Tray implements IGui {
 	private static final Logger LOGGER = Logger.getLogger(Tray.class);
 
 	private static final String TOOLTIP = "tray test";
-	public static final String IMAGE = "/usr/share/pixmaps/gnome-gmush.png";
+	public static final String IMAGE = "cambridge01.png";
+//	public static final String IMAGE = "cambridge02.png";
 	public static final int DELAY = (3 * 1000);
 	TrayIcon trayIcon = null;
 	SystemTray tray = null;
@@ -54,7 +55,7 @@ public class Tray implements IGui {
 		if (SystemTray.isSupported()) {
 			
 			tray = SystemTray.getSystemTray();
-			Image trayImage = Toolkit.getDefaultToolkit().getImage(IMAGE);
+			Image trayImage = Toolkit.getDefaultToolkit().getImage(Tray.class.getClassLoader().getResource(IMAGE));
 			trayIcon = new TrayIcon(trayImage, TOOLTIP, createMenu());
 			trayIcon.setImageAutoSize(true);
 			try {
