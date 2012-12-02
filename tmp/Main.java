@@ -56,8 +56,8 @@ private static String readFile(String path) throws IOException {
 //        getStyleClass().add("browser");
         // load the web page
 try {
-	File f = new File("/home/astulka/Downloads/index.html");
-	System.out.println(readFile("/home/astulka/Downloads/index.html"));
+	File f = new File("/home/astulka/Documents/workspace/TranslatingSysTray/tmp/index.html");
+//	System.out.println(readFile("/home/astulka/Downloads/index.html"));
         webEngine.load(f.toURI().toURL().toExternalForm());
        
 } catch (IOException e) {

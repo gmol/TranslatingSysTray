@@ -1,8 +1,34 @@
+.examp {display:block;}
+
+/* example sentence */
 .eg  {color:#606060;margin:.25em 0 .25em 1.5em; font-style:italic; line-height:150%;}
+
+/* highlights for significant words in examples */
 .cl  {color:#606060;font-weight:bold;font-style:italic;line-height:150%;}
+
+/* I do not know what it is */
 .SEP {color:#000; display:inline;}
+
+/* pink definition */
 .def {color:#a8397a;font-weight:bold;line-height:150%;}
-.hw  {color:#000080;font-weight:bold;font-size:200%;}
+
+/* main header */
+.hw  {color:#000080;font-weight:bold;font-size:200%;margin:0.25em}
+
+.phrHwd {display: block;
+margin: 0px;
+font-size: 1.5em;
+-webkit-margin-before: 0.3em;
+-webkit-margin-after: 0.3em;
+-webkit-margin-start: 0px;
+-webkit-margin-end: 0px;
+font-weight: bold;
+}
+
+body {background-color:#eff4f7;font-size:80%;font-family:"Arial","Helvetica","Nimbus Sans L","FreeSans","Liberation Sans","Microsoft Sans Serif","Arial Unicode MS";}
+
+footer {display:none;}
+
 
 /* 
  p {padding: 0; margin-top: 0; margin-right: 0; margin-bottom: 1em; margin-left: 0;}
