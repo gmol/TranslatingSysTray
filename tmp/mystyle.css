@@ -1,0 +1,10 @@
+.eg  {color:#606060;margin:.25em 0 .25em 1.5em; font-style:italic; line-height:150%;}
+.cl  {color:#606060;font-weight:bold;font-style:italic;line-height:150%;}
+.SEP {color:#000; display:inline;}
+.def {color:#a8397a;font-weight:bold;line-height:150%;}
+.hw  {color:#000080;font-weight:bold;font-size:200%;}
+
+/* 
+ p {padding: 0; margin-top: 0; margin-right: 0; margin-bottom: 1em; margin-left: 0;}
+ line-height:150%;
+*/
