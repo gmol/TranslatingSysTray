@@ -2,11 +2,9 @@ TranslatingSysTray project
 
 ------------------------------------------------------------------------------
 WISH LIST:
-- logger log4j
 - properties file (online request counter, key?, ...)
 - busy status on tray icon
 - status bar for the display panel (result number, page number, total number of pages)
-- change translation trigger from mouse entry event to click event
 - change Translator to singleton with an interface method 'DataSet translate(String word);'
 - 
 

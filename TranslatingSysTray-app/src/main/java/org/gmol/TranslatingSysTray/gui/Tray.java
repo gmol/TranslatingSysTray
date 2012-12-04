@@ -27,22 +27,20 @@ import org.gmol.TranslatingSysTray.translator.TranslatorEx;
  * 
  */
 public class Tray implements IGui {
-	
+
 	private static final Logger LOGGER = Logger.getLogger(Tray.class);
 
 	private static final String TOOLTIP = "tray test";
 	public static final String IMAGE = "cambridge01.png";
-//	public static final String IMAGE = "cambridge02.png";
-	public static final int DELAY = (3 * 1000);
+	// public static final String IMAGE = "cambridge02.png";
 	TrayIcon trayIcon = null;
 	SystemTray tray = null;
 	DisplayFrame frame = null;
-	private boolean entered = false;
 	Translator translator = null;
 	String prevWord = "";
 	String prevTranstalation = "";
 
-	public Tray(String key) {		
+	public Tray(String key) {
 		translator = new Translator(key);
 		open();
 	}
@@ -53,31 +51,32 @@ public class Tray implements IGui {
 
 	private void open() {
 		if (SystemTray.isSupported()) {
-			
+
 			tray = SystemTray.getSystemTray();
-			Image trayImage = Toolkit.getDefaultToolkit().getImage(Tray.class.getClassLoader().getResource(IMAGE));
+			Image trayImage = Toolkit.getDefaultToolkit().getImage(
+					Tray.class.getClassLoader().getResource(IMAGE));
 			trayIcon = new TrayIcon(trayImage, TOOLTIP, createMenu());
 			trayIcon.setImageAutoSize(true);
 			try {
 				//
 				tray.add(trayIcon);
-				//Create and set up the window.
-		        frame = new DisplayFrame("Translator");	 
+				// Create and set up the window.
+				frame = new DisplayFrame("Translator");
 
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
-			}			
+			}
 
 			LOGGER.debug("Add frame mouse listener");
 			frame.addMouseListener(new MouseAdapter() {
-		        @Override
+				@Override
 				public void mouseClicked(MouseEvent e) {
 					LOGGER.debug(e);
 					int buttonPressed = e.getButton();
 					int clickCount = e.getClickCount();
 					switch (buttonPressed) {
 					case MouseEvent.BUTTON1: // left button
-						LOGGER.debug("butt 1"); 
+						LOGGER.debug("cliked butt 1");
 						if (clickCount == 1) {
 							try {
 								setText(translator.getNextTranslation());
@@ -90,7 +89,7 @@ public class Tray implements IGui {
 							frame.setAlwaysOnTop(false);
 						}
 						break;
-					case MouseEvent.BUTTON2: //middle button
+					case MouseEvent.BUTTON2: // middle button
 						LOGGER.debug("butt 2");
 						if (clickCount == 1) {
 							frame.setVisible(false);
@@ -118,27 +117,55 @@ public class Tray implements IGui {
 			});
 
 			trayIcon.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					LOGGER.debug(e);
-					int buttonPressed = e.getButton();
-					int clickCount = e.getClickCount();
-					switch (buttonPressed) {
+				public void mousePressed(MouseEvent event) {
+					LOGGER.debug(event);
+					switch (event.getButton()) {
 					case MouseEvent.BUTTON1:
-						LOGGER.debug("butt 1");
-						if (clickCount == 1) {
-						} else if (clickCount >= 2) {
+						LOGGER.debug("clicked butt 1");
+						if (event.getClickCount() == 1) {
+							String word = getClipboard();
+							LOGGER.debug("prev word(" + prevWord + ") word("
+									+ word + ")");
+							if (prevWord.equals(word)) {
+								LOGGER.debug("prevWord.equals(word)");
+								word = prevTranstalation;
+							} else {
+								prevWord = word;
+								try {
+									// mytodo uncomment
+									translator.translate(word);
+									word = translator.getNextTranslation();
+									prevTranstalation = word;
+								} catch (TranslatorEx e1) {
+									// TODO Auto-generated catch block
+									e1.printStackTrace();
+								}
+							}
+							LOGGER.debug("entered is false set it to true");
+							frame.setVisible(true);
+							setText(word);
+							java.awt.EventQueue.invokeLater(new Runnable() {
+								@Override
+								public void run() {
+									frame.setState(java.awt.Frame.NORMAL);
+									frame.setAlwaysOnTop(true);
+									frame.toFront();
+									frame.repaint();
+								}
+							});
+						} else if (event.getClickCount() >= 2) {
 						}
 						break;
 					case MouseEvent.BUTTON2:
 						LOGGER.debug("butt 2");
-						if (clickCount == 1) {
-						} else if (clickCount >= 2) {
+						if (event.getClickCount() == 1) {
+						} else if (event.getClickCount() >= 2) {
 						}
 						break;
 					case MouseEvent.BUTTON3:
 						LOGGER.debug("butt 3");
-						if (clickCount == 1) {
-						} else if (clickCount >= 2) {
+						if (event.getClickCount() == 1) {
+						} else if (event.getClickCount() >= 2) {
 						}
 						break;
 					default:
@@ -146,54 +173,6 @@ public class Tray implements IGui {
 					}
 				}
 			});
-
-			trayIcon.addMouseMotionListener(new MouseAdapter() {
-				public void mouseMoved(MouseEvent e) {
-					if (!entered) {					
-						String word = getClipboard();
-						LOGGER.debug("prev word(" + prevWord + ") word(" + word + ")");
-						if (prevWord.equals(word)) {
-							LOGGER.debug("prevWord.equals(word)");
-							word = prevTranstalation;
-						} else {
-							prevWord = word;
-							try {
-								// mytodo uncomment
-								translator.translate(word);
-								word = translator.getNextTranslation();
-								prevTranstalation = word;								
-							} catch (TranslatorEx e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-						LOGGER.debug("entered is false set it to true");
-						entered = true;
-						frame.setVisible(entered);						
-						setText(word);
-						java.awt.EventQueue.invokeLater(new Runnable() {
-						    @Override
-						    public void run() {						    	
-								frame.setState (java.awt.Frame.NORMAL);
-								frame.setAlwaysOnTop(true);
-						        frame.toFront();
-						        frame.repaint();
-						    }
-						});
-
-						long delay = DELAY;
-						new java.util.Timer().schedule(new TimerTask() {
-							public void run() {
-								System.out
-										.println("TimerTask: Set entered to false");
-								entered = false;								
-							}
-						}, delay);
-						LOGGER.debug(e);
-					}
-				}
-			});
-
 		} else {
 			System.err.println("SystemTray not supported");
 		}
