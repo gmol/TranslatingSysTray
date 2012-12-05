@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class SearchDataSet extends DataSet {
+public class SearchDataSet /*implements DataSet*/ {
 	
 	private static final Logger LOGGER = Logger.getLogger(SearchDataSet.class);
 	//

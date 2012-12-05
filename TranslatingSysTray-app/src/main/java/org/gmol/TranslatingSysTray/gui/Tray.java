@@ -7,23 +7,18 @@ import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.Transferable;
-import java.util.TimerTask;
-
 import org.apache.log4j.Logger;
 import org.gmol.TranslatingSysTray.translator.Translator;
 import org.gmol.TranslatingSysTray.translator.TranslatorEx;
 
-;
-
 /**
- * Hello world!
  * 
  */
 public class Tray implements IGui {
@@ -32,11 +27,10 @@ public class Tray implements IGui {
 
 	private static final String TOOLTIP = "tray test";
 	public static final String IMAGE = "cambridge01.png";
-	// public static final String IMAGE = "cambridge02.png";
-	TrayIcon trayIcon = null;
-	SystemTray tray = null;
-	DisplayFrame frame = null;
-	Translator translator = null;
+	TrayIcon trayIcon;
+	SystemTray tray;
+	DisplayFrame frame;;
+	Translator translator;
 	String prevWord = "";
 	String prevTranstalation = "";
 
@@ -62,117 +56,14 @@ public class Tray implements IGui {
 				tray.add(trayIcon);
 				// Create and set up the window.
 				frame = new DisplayFrame("Translator");
-
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
 			}
 
 			LOGGER.debug("Add frame mouse listener");
-			frame.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					LOGGER.debug(e);
-					int buttonPressed = e.getButton();
-					int clickCount = e.getClickCount();
-					switch (buttonPressed) {
-					case MouseEvent.BUTTON1: // left button
-						LOGGER.debug("cliked butt 1");
-						if (clickCount == 1) {
-							try {
-								setText(translator.getNextTranslation());
-							} catch (TranslatorEx e1) {
-								// MYTODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						} else if (clickCount >= 2) {
-							frame.setVisible(false);
-							frame.setAlwaysOnTop(false);
-						}
-						break;
-					case MouseEvent.BUTTON2: // middle button
-						LOGGER.debug("butt 2");
-						if (clickCount == 1) {
-							frame.setVisible(false);
-							frame.setAlwaysOnTop(false);
-						} else if (clickCount >= 2) {
-						}
-						break;
-					case MouseEvent.BUTTON3: // rigth button
-						LOGGER.debug("butt 3");
-						if (clickCount == 1) {
-							try {
-								setText(translator.getPreviousTranslation());
-							} catch (TranslatorEx e1) {
-								// MYTODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						} else if (clickCount >= 2) {
-						}
-						break;
-					default:
-						break;
-					}
-					super.mouseClicked(e);
-				}
-			});
-
-			trayIcon.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent event) {
-					LOGGER.debug(event);
-					switch (event.getButton()) {
-					case MouseEvent.BUTTON1:
-						LOGGER.debug("clicked butt 1");
-						if (event.getClickCount() == 1) {
-							String word = getClipboard();
-							LOGGER.debug("prev word(" + prevWord + ") word("
-									+ word + ")");
-							if (prevWord.equals(word)) {
-								LOGGER.debug("prevWord.equals(word)");
-								word = prevTranstalation;
-							} else {
-								prevWord = word;
-								try {
-									// mytodo uncomment
-									translator.translate(word);
-									word = translator.getNextTranslation();
-									prevTranstalation = word;
-								} catch (TranslatorEx e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-							}
-							LOGGER.debug("entered is false set it to true");
-							frame.setVisible(true);
-							setText(word);
-							java.awt.EventQueue.invokeLater(new Runnable() {
-								@Override
-								public void run() {
-									frame.setState(java.awt.Frame.NORMAL);
-									frame.setAlwaysOnTop(true);
-									frame.toFront();
-									frame.repaint();
-								}
-							});
-						} else if (event.getClickCount() >= 2) {
-						}
-						break;
-					case MouseEvent.BUTTON2:
-						LOGGER.debug("butt 2");
-						if (event.getClickCount() == 1) {
-						} else if (event.getClickCount() >= 2) {
-						}
-						break;
-					case MouseEvent.BUTTON3:
-						LOGGER.debug("butt 3");
-						if (event.getClickCount() == 1) {
-						} else if (event.getClickCount() >= 2) {
-						}
-						break;
-					default:
-						break;
-					}
-				}
-			});
+			frame.addMouseListener(new FrameMouseListener());
+			LOGGER.debug("Add tray mouse listener");
+			trayIcon.addMouseListener(new TrayMouseListener());
 		} else {
 			System.err.println("SystemTray not supported");
 		}
@@ -180,23 +71,134 @@ public class Tray implements IGui {
 
 	private PopupMenu createMenu() {
 		PopupMenu menu = new PopupMenu();
-		MenuItem foo = new MenuItem("foo");
+//		MenuItem foo = new MenuItem("foo");
 		MenuItem exit = new MenuItem("exit");
-		exit.addActionListener(new exitListener());
-		menu.add(foo);
-		menu.addSeparator();
+		exit.addActionListener(new ExitListener());
+//		menu.add(foo);
+//		menu.addSeparator();
 		menu.add(exit);
 		return menu;
 	}
 
-	class exitListener implements ActionListener {
+	class ExitListener implements ActionListener {
 
 		public void actionPerformed(ActionEvent e) {
 			LOGGER.debug("exiting...");
 			System.exit(0);
 		}
 	}
+	
+	class FrameMouseListener extends MouseAdapter {
 
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			LOGGER.debug(e);
+			int buttonPressed = e.getButton();
+			int clickCount = e.getClickCount();
+			switch (buttonPressed) {
+			case MouseEvent.BUTTON1: // left button
+				LOGGER.debug("butt 1");
+				if (clickCount == 1) {
+					try {
+						setText(translator.getNextTranslation());
+					} catch (TranslatorEx e1) {
+						// MYTODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else if (clickCount >= 2) {
+					frame.setVisible(false);
+					frame.setAlwaysOnTop(false);
+				}
+				break;
+			case MouseEvent.BUTTON2: // middle button
+				LOGGER.debug("butt 2");
+				if (clickCount == 1) {
+					LOGGER.debug("1 click, hide the frame");
+					frame.setVisible(false);
+					frame.setAlwaysOnTop(false);
+				} else if (clickCount >= 2) {
+				}
+				break;
+			case MouseEvent.BUTTON3: // rigth button
+				LOGGER.debug("butt 3");
+				if (clickCount == 1) {
+					try {
+						setText(translator.getPreviousTranslation());
+					} catch (TranslatorEx e1) {
+						// MYTODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				} else if (clickCount >= 2) {
+				}
+				break;
+			default:
+				break;
+			}
+			super.mouseClicked(e);
+		}
+	}
+
+	class TrayMouseListener extends MouseAdapter {
+
+		@Override
+		public void mousePressed(MouseEvent event) {
+			LOGGER.debug(event);
+			switch (event.getButton()) {
+			case MouseEvent.BUTTON1:
+				LOGGER.debug("clicked butt 1");
+				if (event.getClickCount() == 1) {
+					String word = getClipboard();
+					LOGGER.debug("prev word(" + prevWord + ") word("
+							+ word + ")");
+					if (prevWord.equals(word)) {
+						LOGGER.debug("prevWord.equals(word)");
+						word = prevTranstalation;
+					} else {
+						prevWord = word;
+						try {
+							// mytodo uncomment
+							translator.translate(word);
+							word = translator.getNextTranslation();
+							prevTranstalation = word;
+						} catch (TranslatorEx e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+					}
+					LOGGER.debug("entered is false set it to true");
+					frame.setVisible(true);
+					setText(word);
+					java.awt.EventQueue.invokeLater(new Runnable() {
+						@Override
+						public void run() {
+							frame.setState(java.awt.Frame.NORMAL);
+							frame.setAlwaysOnTop(true);
+							frame.toFront();
+							frame.repaint();
+						}
+					});
+				} else if (event.getClickCount() >= 2) {
+				}
+				break;
+			case MouseEvent.BUTTON2:
+				LOGGER.debug("butt 2");
+				if (event.getClickCount() == 1) {
+				} else if (event.getClickCount() >= 2) {
+				}
+				break;
+			case MouseEvent.BUTTON3:
+				LOGGER.debug("butt 3");
+				if (event.getClickCount() == 1) {
+				} else if (event.getClickCount() >= 2) {
+				}
+				break;
+			default:
+				break;
+			}
+			super.mousePressed(event);
+		}		
+	}
+	
 	@Override
 	public void setText(String txt) {
 		LOGGER.debug(txt);
