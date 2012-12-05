@@ -4,16 +4,15 @@ import java.util.ArrayList;
 
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-//mytodo check how it can be fixed
-import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager; //mydoto do sth about that
 import org.apache.log4j.Logger;
-import org.gmol.TranslatingSysTray.App;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import fr.idm.sk.publish.api.client.light.SkPublishAPI;
 import fr.idm.sk.publish.api.client.light.SkPublishAPIException;
 
-public class Translator {
+public class Translator implements ITranslator{
 
 	private static final Logger LOGGER = Logger.getLogger(Translator.class);
 	private static final String BASEURL = "https://dictionary.cambridge.org";
@@ -35,7 +34,7 @@ public class Translator {
 		});
 	}
 
-	public void translate(String word) throws TranslatorEx {
+	public DataSet translate(String word) throws TranslatorEx {
 
 		LOGGER.debug("---translate(" + word + ")");
 
@@ -66,6 +65,7 @@ public class Translator {
 			t.printStackTrace();
 			throw new TranslatorEx(t);
 		}
+		return null;
 	}
 
 	public String getNextTranslation() throws TranslatorEx {
