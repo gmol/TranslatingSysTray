@@ -1,0 +1,52 @@
+@startuml
+
+hide empty members
+
+note as N1
+<size:10> Translator keeps Datasets in the map
+<size:10> <b><color:SlateGray >key=word,val=Dataset </color>
+<size:10> When Translator method is being called from Dataset
+<size:10> it should be called like this <u> translator.getNextTranslation(this) </u>
+<size:10> So that Translator is able to perform getNextTranslation
+<size:10> for a particular Dataset object </size>
+end note
+
+package org.gmol.TranslatingSysTray.translator {
+    interface iTranslator {
+        +Dataset translate(String word)
+    }
+    class Translator implements iTranslator {
+    
+        + Translator(String key)     
+        
+        + Dataset translate(String word)   
+        
+        + String getNextTranslation(Dataset ds)  
+        + String getPreviousTranslation(Dataset ds)
+          
+        + // already fetched entries\n ArrayList<String> getEntryLabels()
+    }
+    class Dataset {
+        + String getNextTranslation()
+        + String getPreviousTranslation()  
+    }
+    class TranslatorEx {
+    }
+}
+class Map {
+}
+
+class SkPublishAPI #LightSkyBlue {
+}
+
+
+Translator "1" *--> "(*)" Dataset : datasets >
+'(Dataset,Translator) .. Map
+N1 .. Dataset
+N1 .. Translator 
+Translator "1" <-- "1" Dataset : translator <
+Translator "1" --> "1" SkPublishAPI : api >
+Translator .. TranslatorEx
+Translator --> Logger : LOGGER
+
+@enduml
