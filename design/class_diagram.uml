@@ -6,8 +6,8 @@ note as N1
 <size:10> Translator keeps Datasets in the map
 <size:10> <b><color:SlateGray >key=word,val=Dataset </color>
 <size:10> When Translator's method is being called from Dataset
-<size:10> it should be called like this <u> translator.getNextTranslation(this) </u>
-<size:10> So that Translator is able to perform getNextTranslation
+<size:10> it should be called like this <u> translator.getPage(this, int indexp) </u>
+<size:10> So that Translator is able to perform getPage
 <size:10> for a particular Dataset object </size>
 end note
 
@@ -22,10 +22,16 @@ package org.gmol.TranslatingSysTray.translator {
         
         + Dataset translate(String word)   
 
-        ~ List<Entry> getPage(String word,int pageIndex)
+        ~ List<Entry> getPage(Dataset ds,int pageIndex)
         ~ String getTranslation(Entry e)
     }
-    class Dataset {
+    class IDataset {
+		+ String getNextTranslation()
+        + String getPreviousTranslation()        
+   		+ int getPageCount()
+        + int getEntryCount()        
+    }
+    class Dataset implements IDataset{
         - String word
         
         - int pageSize
