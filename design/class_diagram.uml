@@ -14,22 +14,27 @@ end note
 package org.gmol.TranslatingSysTray.translator {
     
     interface ITranslator {
-        +Dataset translate(String word)
+        +IDataset translate(String word)
     }
     class Translator implements ITranslator {
     
         + Translator(String key)     
-        
-        + Dataset translate(String word)   
-
-        ~ List<Entry> getPage(Dataset ds,int pageIndex)
+        ~ List<Entry> getPage(IDataset ds, int pageIndex)
         ~ String getTranslation(Entry e)
     }
     class IDataset {
-		+ String getNextTranslation()
-        + String getPreviousTranslation()        
-   		+ int getPageCount()
-        + int getEntryCount()        
+	    + String getWord()
+	    
+		+ int getPageSize()
+   		+ int getTotalPageCount()
+   		+ int getTotalResultNumber()
+   		
+        + int getEntryCount()
+        
+   		+ String getNextTranslation()
+        + String getPreviousTranslation()
+        + String getTranslation(String entryLabel)
+        + List<String> getEntryLabels(int pageIndex)
     }
     class Dataset implements IDataset{
         - String word
@@ -40,17 +45,11 @@ package org.gmol.TranslatingSysTray.translator {
         
         - int currentEntryIndex
         - List<Entry> entries
-        ~ // can only be created by Translator\nDataset()
-        
-        + // already fetched entries\n List<String> getEntryLabels()       
-        + String getNextTranslation()
-        + String getPreviousTranslation()        
-
-		+ int getPageCount()
-        + int getEntryCount()        
+        ~ // can only be created by Translator\nDataset(Translator translator)
+        - Dataset()
     }
     class Entry {
-        ~ String translation
+        - String translation
         ~ String getTranslation()
     }
     class TranslatorEx {
@@ -62,7 +61,7 @@ class Map {
 class SkPublishAPI #LightSkyBlue {
 }
 
-
+ITranslator .. IDataset
 Translator "1" *--> "(*)" Dataset : datasets >
 N1 .. Dataset
 N1 .. Translator 
