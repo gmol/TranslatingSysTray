@@ -1,4 +1,6 @@
 @startuml
+skinparam monochrome false
+skinparam backgroundColor MintCream
 
 hide empty members
 
@@ -21,6 +23,8 @@ package org.gmol.TranslatingSysTray.translator {
         + Translator(String key)     
         ~ List<Entry> getPage(IDataset ds, int pageIndex)
         ~ String getTranslation(Entry e)
+    }
+    class DatasetEx {
     }
     class IDataset {
 	    + String getWord()
@@ -55,20 +59,21 @@ package org.gmol.TranslatingSysTray.translator {
     class TranslatorEx {
     }
 }
-class Map {
-}
-
 class SkPublishAPI #LightSkyBlue {
 }
 
 ITranslator .. IDataset
 Translator "1" *--> "(*)" Dataset : datasets >
-N1 .. Dataset
-N1 .. Translator 
+'N1 .. Dataset
+'N1 .. Translator
+Dataset .. N1
+Translator .. N1
 Translator "1" <-- "1" Dataset : translator <
 Translator "1" --> "1" SkPublishAPI : api >
 Translator .. TranslatorEx
 Translator --> Logger : LOGGER 
 Dataset "1" *--> "entries.size()" Entry : entries >
+Dataset .. DatasetEx
+IDataset .. DatasetEx
 
 @enduml
