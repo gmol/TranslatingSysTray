@@ -1,6 +1,9 @@
 package org.gmol.TranslatingSysTray.translator;
 
 public interface ITranslator {
-	public DataSet translate(String word) throws TranslatorEx;
+	//
+	Dataset translate(String word) throws TranslatorEx;
+	//
+	IDataset translateee(String word) throws TranslatorEx;
 
 }

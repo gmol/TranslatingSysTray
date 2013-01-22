@@ -15,7 +15,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import org.apache.log4j.Logger;
-import org.gmol.TranslatingSysTray.translator.DataSet;
+import org.gmol.TranslatingSysTray.translator.Dataset;
 import org.gmol.TranslatingSysTray.translator.Translator;
 import org.gmol.TranslatingSysTray.translator.TranslatorEx;
 
@@ -34,7 +34,7 @@ public class Tray implements IGui {
 	Translator translator;
 	String prevWord = "";
 	String prevTranstalation = "";
-	DataSet dataset;
+	Dataset dataset;
 
 	public Tray(String key) {
 		translator = new Translator(key);

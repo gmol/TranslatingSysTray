@@ -16,7 +16,7 @@ end note
 package org.gmol.TranslatingSysTray.translator {
     
     interface ITranslator {
-        +IDataset translate(String word)
+        +IDataset translate(String word) throws TranslatorEx
     }
     class Translator implements ITranslator {
     
@@ -30,11 +30,9 @@ package org.gmol.TranslatingSysTray.translator {
 	    + String getWord()
 	    
 		+ int getPageSize()
-   		+ int getTotalPageCount()
+   		+ int getTotalPageNumber()
    		+ int getTotalResultNumber()
-   		
-        + int getEntryCount()
-        
+
    		+ String getNextTranslation()
         + String getPreviousTranslation()
         + String getTranslation(String entryLabel)
@@ -42,7 +40,7 @@ package org.gmol.TranslatingSysTray.translator {
     }
     class Dataset implements IDataset{
         - String word
-        
+
         - int pageSize
         - int totalResultNumber
         - int totalPageNumber
@@ -63,17 +61,20 @@ class SkPublishAPI #LightSkyBlue {
 }
 
 ITranslator .. IDataset
+'ITranslator . TranslatorEx
+TranslatorEx .up. ITranslator
 Translator "1" *--> "(*)" Dataset : datasets >
-'N1 .. Dataset
-'N1 .. Translator
-Dataset .. N1
-Translator .. N1
+N1 .. Dataset
+N1 .. Translator
+'Dataset .. N1
+'Translator .. N1
 Translator "1" <-- "1" Dataset : translator <
 Translator "1" --> "1" SkPublishAPI : api >
-Translator .. TranslatorEx
+Translator .up. TranslatorEx
 Translator --> Logger : LOGGER 
-Dataset "1" *--> "entries.size()" Entry : entries >
+Dataset "1" *-right-> "entries.size()" Entry : entries >
 Dataset .. DatasetEx
 IDataset .. DatasetEx
+
 
 @enduml

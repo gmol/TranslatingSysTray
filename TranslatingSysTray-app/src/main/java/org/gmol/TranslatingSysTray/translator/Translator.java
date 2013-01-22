@@ -34,7 +34,7 @@ public class Translator implements ITranslator{
 		});
 	}
 
-	public DataSet translate(String word) throws TranslatorEx {
+	public Dataset translate(String word) throws TranslatorEx {
 
 		LOGGER.debug("---translate(" + word + ")");
 
