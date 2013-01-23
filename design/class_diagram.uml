@@ -59,6 +59,9 @@ package org.gmol.TranslatingSysTray.translator {
 }
 class SkPublishAPI #LightSkyBlue {
 }
+class Logger << (S,#FF7700) Singleton >> {
+}
+
 
 ITranslator .. IDataset
 'ITranslator . TranslatorEx
@@ -71,7 +74,8 @@ N1 .. Translator
 Translator "1" <-- "1" Dataset : translator <
 Translator "1" --> "1" SkPublishAPI : api >
 Translator .up. TranslatorEx
-Translator --> Logger : LOGGER 
+Translator --> Logger : LOGGER
+Dataset --> Logger : LOGGER
 Dataset "1" *-right-> "entries.size()" Entry : entries >
 Dataset .. DatasetEx
 IDataset .. DatasetEx
