@@ -1,25 +1,35 @@
 package org.gmol.TranslatingSysTray.translator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Dataset implements IDataset{
 	
+	static final int PAGESIZE = 10;
+	
 	private Translator translator;
-    private String word;
+    
+	private String word;
     
     private int pageSize;
+    
     private int totalResultNumber;
+    
     private int totalPageNumber;
     
     private int currentEntryIndex;
-    private List<Entry> entries;
+    
+    private List<Entry> entries = new ArrayList<Entry>();
 
-	// prevent Dataset to be created outside its package
+	// prevent Dataset to be created 
 	private Dataset() {
     }
-    // can only be created by Translator	
-	Dataset(Translator translator) {
+	
+    // can only be created by Translator (within its package)
+	Dataset(Translator translator, String word, List<Entry> entries) {		
 		this.translator = translator;
+		this.word = word;
+		this.entries.addAll(entries);
 	}
 
 	@Override
@@ -29,7 +39,7 @@ public class Dataset implements IDataset{
 
 	@Override
     public int getPageSize() {
-	    return pageSize;
+	    return PAGESIZE;
     }
 
 	@Override
@@ -66,4 +76,15 @@ public class Dataset implements IDataset{
 	    return null;
     }
 	
+    public void addEntries(List<Entry> entries) {
+		this.entries.addAll(entries);	    
+    }
+    
+    void setTotalResultNumber(int totalResultNumber) {
+    	this.totalResultNumber = totalResultNumber;
+    }
+
+	void setTotalPageNumber(int totalPageNumber) {
+    	this.totalPageNumber = totalPageNumber;
+    }
 }

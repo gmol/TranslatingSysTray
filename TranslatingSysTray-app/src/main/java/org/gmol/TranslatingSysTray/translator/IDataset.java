@@ -3,6 +3,8 @@
  */
 package org.gmol.TranslatingSysTray.translator;
 
+import java.util.List;
+
 /**
  * @author stulka
  *
@@ -11,7 +13,7 @@ public interface IDataset {
 	//
     String getWord();
     //
-	int getPageSize();
+    int getPageSize();
 	//
 	int getTotalPageNumber();
 	//
@@ -23,6 +25,5 @@ public interface IDataset {
     //
     String getTranslation(String entryLabel);
     //
-    java.util.List<String> getEntryLabels(int pageIndex);
-
+    List<String> getEntryLabels(int pageIndex);
 }

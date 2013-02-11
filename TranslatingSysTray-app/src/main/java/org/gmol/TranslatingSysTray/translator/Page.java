@@ -60,4 +60,8 @@ class Page {
 		} 
 		return labels;
 	}
+
+	List<Entry> getEntries() {
+    	return entries;
+    }
 }
