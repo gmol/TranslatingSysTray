@@ -33,6 +33,16 @@ public class Translator implements ITranslator{
 			}
 		});
 	}
+	
+	public Translator(String key, UTestAPI api) {
+		DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
+		api = api;
+		api.setRequestHandler(new SkPublishAPI.RequestHandler() {
+			public void prepareGetRequest(HttpGet request) {
+				LOGGER.debug("*** Request: " + request.getURI());
+			}
+		});
+	}
 
 	public Dataset translate(String word) throws TranslatorEx {
 
