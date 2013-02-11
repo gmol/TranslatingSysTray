@@ -2,7 +2,7 @@ package org.gmol.TranslatingSysTray.translator;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
+import java.util.List;
 import org.apache.log4j.Logger;
 import org.json.*;
 
@@ -51,23 +51,27 @@ class DeJsonizer {
 	
 	private static final Logger LOGGER = Logger.getLogger(DeJsonizer.class);
 
-	public static Page dejsonSearch(JSONObject search) throws Exception {
+	public static List<Entry> dejsonSearch(JSONObject search) throws Exception {		
 		LOGGER.debug("dejsonSearch");
+		
 		int totalResultNumber = (Integer) search.get("resultNumber");
 		LOGGER.debug("Total Result Number: " + totalResultNumber);
+		
 		int pageNumber = (Integer) search.get("pageNumber");
 		LOGGER.debug("Page number:" + pageNumber);
+		
 		int currentPageIndex = (Integer) search.get("currentPageIndex");
 		LOGGER.debug("Current Page index:" + currentPageIndex);
+		
 		// loop array
 		JSONArray results = (JSONArray) search.get("results");
 		int resultNumber = results.length();
 		LOGGER.debug("Number of results fetched: " + resultNumber);
+		
 		java.util.List<Entry> entries = new ArrayList<Entry>();
 		for (int i = 0; i < results.length(); i++) {
 
 			JSONObject o = (JSONObject) results.get(i);
-
 			String entryLabel = (String) o.get("entryLabel");
 			LOGGER.debug("entryLabel: " + entryLabel);
 
@@ -76,7 +80,7 @@ class DeJsonizer {
 
 			entries.add(new Entry(entryId, entryLabel));
 		}
-		return new Page(totalResultNumber, pageNumber, currentPageIndex, entries);
+		return entries;
 	}
 
 	public static String dejsonEntry(JSONObject entry) throws JSONException {
