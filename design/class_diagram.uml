@@ -48,7 +48,7 @@ package org.gmol.TranslatingSysTray.translator {
         
         - int currentEntryIndex
         - List<Entry> entries
-        ~ // can only be created by Translator\nDataset(Translator translator)
+        ~ // can only be created by Translator\nDataset(Translator translator, String word, int pageSize, Page page)
         - Dataset()
     }
     class Entry {
@@ -56,6 +56,10 @@ package org.gmol.TranslatingSysTray.translator {
         ~ String getTranslation()
     }
     class TranslatorEx {
+    }
+    class DeJsonizer << (S,Yellow) Static >>{
+    }
+    class Page {
     }
 }
 class SkPublishAPI #LightSkyBlue {
@@ -76,9 +80,12 @@ Translator "1" <-- "1" Dataset : translator <
 Translator "1" --> "1" SkPublishAPI : api >
 Translator .up. TranslatorEx
 Translator --> Logger : LOGGER
+Translator .. DeJsonizer
 Dataset --> Logger : LOGGER
 Dataset "1" *-right-> "entries.size()" Entry : entries >
 Dataset .. DatasetEx
+Dataset .. Page
+DeJsonizer .. Page
 IDataset .. DatasetEx
 
 
