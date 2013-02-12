@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 
 import org.apache.log4j.Logger;
 import org.gmol.TranslatingSysTray.translator.Dataset;
+import org.gmol.TranslatingSysTray.translator.DatasetEx;
+import org.gmol.TranslatingSysTray.translator.IDataset;
 import org.gmol.TranslatingSysTray.translator.Translator;
 import org.gmol.TranslatingSysTray.translator.TranslatorEx;
 
@@ -32,9 +34,7 @@ public class Tray implements IGui {
 	SystemTray tray;
 	DisplayFrame frame;;
 	Translator translator;
-	String prevWord = "";
-	String prevTranstalation = "";
-	Dataset dataset;
+	IDataset dataset;
 
 	public Tray(String key) {
 		translator = new Translator(key);
@@ -102,8 +102,8 @@ public class Tray implements IGui {
 				LOGGER.debug("butt 1");
 				if (clickCount == 1) {
 					try {
-						setText(translator.getNextTranslation());
-					} catch (TranslatorEx e1) {
+						setText(dataset.getNextTranslation());
+					} catch (DatasetEx e1) {
 						// MYTODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -125,8 +125,8 @@ public class Tray implements IGui {
 				LOGGER.debug("butt 3");
 				if (clickCount == 1) {
 					try {
-						setText(translator.getPreviousTranslation());
-					} catch (TranslatorEx e1) {
+						setText(dataset.getPreviousTranslation());
+					} catch (DatasetEx e1) {
 						// MYTODO Auto-generated catch block
 						e1.printStackTrace();
 					}
@@ -150,26 +150,22 @@ public class Tray implements IGui {
 				LOGGER.debug("clicked butt 1");
 				if (event.getClickCount() == 1) {
 					String word = getClipboard();
-					LOGGER.debug("prev word(" + prevWord + ") word("
-							+ word + ")");
-					if (prevWord.equals(word)) {
-						LOGGER.debug("prevWord.equals(word)");
-						word = prevTranstalation;
-					} else {
-						prevWord = word;
-						try {
-							// mytodo uncomment
-							dataset = translator.translate(word);
-							word = translator.getNextTranslation();
-							prevTranstalation = word;
-						} catch (TranslatorEx e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					try {
+						// mytodo uncomment
+						dataset = translator.translate(word);
+					} catch (TranslatorEx e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+
 					LOGGER.debug("entered is false set it to true");
 					frame.setVisible(true);
-					setText(word);
+					try {
+	                    setText(dataset.getFirstTranslation());
+                    } catch (DatasetEx e) {
+	                    // TODO Auto-generated catch block
+	                    e.printStackTrace();
+                    }
 					java.awt.EventQueue.invokeLater(new Runnable() {
 						@Override
 						public void run() {

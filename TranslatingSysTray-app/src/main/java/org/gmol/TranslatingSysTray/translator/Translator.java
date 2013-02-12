@@ -11,15 +11,14 @@ import fr.idm.sk.publish.api.client.light.SkPublishAPIException;
 //import org.gmol.TranslatingSysTray.translator.UTestAPI;
 import org.gmol.TranslatingSysTray.translator.TranslatorEx;
 
+@SuppressWarnings("deprecation")
 public class Translator implements ITranslator{
 
 	private static final Logger LOGGER = Logger.getLogger(Translator.class);
 	private static final String BASEURL = "https://dictionary.cambridge.org";
-
 	private static final String DICTCODE = "british";
-
-	private SearchDataSet dataset = new SearchDataSet();
 	private SkPublishAPI api;
+	private int pageSize = 10;
 
 	public Translator(String key) {
 		DefaultHttpClient httpClient = new DefaultHttpClient(new ThreadSafeClientConnManager());
@@ -31,7 +30,7 @@ public class Translator implements ITranslator{
 		});
 	}
 	
-	public String getTranslation(final Entry e) throws TranslatorEx {
+	public String getEntryTranslation(final Entry e) throws TranslatorEx {
 		LOGGER.debug(e.toString());
 		try {
 			JSONObject getEntryresults = new JSONObject(api.getEntry(DICTCODE, e.getEntryId(), "html"));
@@ -45,9 +44,9 @@ public class Translator implements ITranslator{
 		}
 	}
 	
-	public List<Entry> getPage(IDataset dataset, int pageIndex) throws TranslatorEx {
+	public List<Entry> getEntries(IDataset dataset, int pageIndex) throws TranslatorEx {
 		try {
-			JSONObject results = new JSONObject(api.search(DICTCODE, dataset.getWord(), Dataset.PAGESIZE, pageIndex));
+			JSONObject results = new JSONObject(api.search(DICTCODE, dataset.getWord(), pageSize, pageIndex));
 			Page page = DeJsonizer.dejsonSearch(results); 
 			return page.getEntries();
 		} catch (Exception ex) {
@@ -61,9 +60,9 @@ public class Translator implements ITranslator{
 
 		try {
 			int pageIndex = 1;
-			JSONObject results = new JSONObject(api.search(DICTCODE, word, Dataset.PAGESIZE, pageIndex));
+			JSONObject results = new JSONObject(api.search(DICTCODE, word, pageSize, pageIndex));
 			Page page = DeJsonizer.dejsonSearch(results);
-			IDataset dataset = new Dataset(this, word, page.getEntries());
+			IDataset dataset = new Dataset(this, word, pageSize, page);
 			return dataset;
 		} catch (SkPublishAPIException ex) {
 			throw new TranslatorEx(ex);

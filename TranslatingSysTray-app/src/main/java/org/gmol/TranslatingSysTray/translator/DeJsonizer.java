@@ -1,8 +1,6 @@
 package org.gmol.TranslatingSysTray.translator;
 
-import java.io.IOException;
 import java.util.ArrayList;
-
 import org.apache.log4j.Logger;
 import org.json.*;
 
@@ -53,12 +51,16 @@ class DeJsonizer {
 
 	public static Page dejsonSearch(JSONObject search) throws Exception {
 		LOGGER.debug("dejsonSearch");
+		
 		int totalResultNumber = (Integer) search.get("resultNumber");
 		LOGGER.debug("Total Result Number: " + totalResultNumber);
-		int pageNumber = (Integer) search.get("pageNumber");
-		LOGGER.debug("Page number:" + pageNumber);
+		
+		int totalPageNumber = (Integer) search.get("pageNumber");
+		LOGGER.debug("Page number:" + totalPageNumber);
+		
 		int currentPageIndex = (Integer) search.get("currentPageIndex");
 		LOGGER.debug("Current Page index:" + currentPageIndex);
+		
 		// loop array
 		JSONArray results = (JSONArray) search.get("results");
 		int resultNumber = results.length();
@@ -76,7 +78,7 @@ class DeJsonizer {
 
 			entries.add(new Entry(entryId, entryLabel));
 		}
-		return new Page(totalResultNumber, pageNumber, currentPageIndex, entries);
+		return new Page(totalResultNumber, totalPageNumber, currentPageIndex, entries);
 	}
 
 	public static String dejsonEntry(JSONObject entry) throws JSONException {

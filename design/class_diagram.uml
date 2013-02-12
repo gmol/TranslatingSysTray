@@ -33,9 +33,10 @@ package org.gmol.TranslatingSysTray.translator {
    		+ int getTotalPageNumber()
    		+ int getTotalResultNumber()
 
-   		+ String getNextTranslation()
-        + String getPreviousTranslation()
-        + String getTranslation(String entryLabel)
+        + String getFirstTranslation() throws DatasetEx;
+   		+ String getNextTranslation() throws DatasetEx;
+        + String getPreviousTranslation() throws DatasetEx;
+        + String getTranslation(String entryLabel) throws DatasetEx;
         + List<String> getEntryLabels(int pageIndex)
     }
     class Dataset implements IDataset{

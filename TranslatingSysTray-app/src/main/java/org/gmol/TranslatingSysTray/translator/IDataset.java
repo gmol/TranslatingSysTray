@@ -19,9 +19,11 @@ public interface IDataset {
 	//
 	int getTotalResultNumber();
     //
-	String getNextTranslation();
+	String getFirstTranslation() throws DatasetEx;
+    //
+	String getNextTranslation() throws DatasetEx;
 	//
-    String getPreviousTranslation();
+    String getPreviousTranslation() throws DatasetEx;
     //
     String getTranslation(String entryLabel);
     //
