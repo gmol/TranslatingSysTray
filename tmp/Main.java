@@ -16,6 +16,7 @@ import java.nio.channels.FileChannel ;
 import java.nio.MappedByteBuffer;
 import java.nio.charset.Charset;
 import java.io.IOException;
+import java.util.Properties;
 
 public class Main extends Application {
     private Scene scene;
@@ -29,6 +30,8 @@ public class Main extends Application {
     }
  
     public static void main(String[] args){
+	Properties props = System.getProperties();
+	props.list(System.out);
         launch(args);
     }
 }
