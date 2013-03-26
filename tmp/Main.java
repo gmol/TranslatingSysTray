@@ -29,11 +29,25 @@ public class Main extends Application {
         stage.show();
     }
  
-    public static void main(String[] args){
-	Properties props = System.getProperties();
-	props.list(System.out);
-        launch(args);
-    }
+	public static void main(String[] args) {
+
+		System.out.println("Java FX enabled: " + isJavaFxEnabled());
+		launch(args);
+	}
+	
+	private static boolean isJavaFxEnabled() {
+		try {
+			double jversion = Double.parseDouble(System.getProperty("java.specification.version"));
+			if (jversion >= 1.7) {
+				return true;
+			}
+		} catch (NumberFormatException e) {
+			// printStackTrace(e);
+			System.err.println("ERROR: NumberFormatException");
+			System.exit(1);
+		}
+		return false;
+	}
 }
 class Browser extends Region {
  
