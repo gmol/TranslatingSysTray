@@ -13,6 +13,19 @@ HOW TO BUILD
 $ mvn clean install
 
 ------------------------------------------------------------------------------
+HOW TO ADD TO ECLIPSE
+# Install maven plugin in eclipse (m2eclipse)
+# - Choose install new software
+# - In Install dialog select '--All available sites--' 
+# - search for maven
+# - 'm2e -Maven integration for Eclipse' is what you are looking for 
+
+# Create elipse project
+mvn eclipse:eclipse
+# Clean the build it is required because there an error message in eclipse if you do not do it
+mvn eclipse:clean
+
+------------------------------------------------------------------------------
 HOW TO RUN
 
 # First way:
@@ -23,3 +36,5 @@ $ java -jar ./TranslatingSysTray-app/target/TranslatingSysTray-0.0.1-SNAPSHOT-ja
 # Second way:
 #Using exec plugin that executes the supplied java class in the current VM with the enclosing project's dependencies as classpath.
 ./run.sh <CAMBRIDGE_API_KEY>
+
+
