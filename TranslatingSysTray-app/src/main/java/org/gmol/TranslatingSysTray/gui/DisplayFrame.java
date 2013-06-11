@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
 
-public class DisplayFrame extends JFrame {
+public class DisplayFrame extends JFrame implements IFrame {
 
 	/**
 	 * 
@@ -35,6 +35,7 @@ public class DisplayFrame extends JFrame {
 	}
 
 	private void init() {
+		
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		// Create main panel
 		mainPane = new JPanel(new BorderLayout());
@@ -47,6 +48,12 @@ public class DisplayFrame extends JFrame {
 		editorScrollPane.setPreferredSize(new Dimension(800, 600));
 		editorScrollPane.setMinimumSize(new Dimension(10, 10));
 
+
+		setState(java.awt.Frame.NORMAL);
+		setAlwaysOnTop(true);
+		toFront();
+//		repaint();
+		
 		mainPane.add(editorScrollPane);
 		add(mainPane);
 
@@ -93,6 +100,16 @@ public class DisplayFrame extends JFrame {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+	}
 
+	@Override
+	public void showFrame() {
+		setVisible(true);
+	}
+
+	@Override
+	public void hideFrame() {
+		setVisible(false);
+		setAlwaysOnTop(false);
 	}
 }

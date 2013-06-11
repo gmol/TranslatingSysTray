@@ -15,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import org.apache.log4j.Logger;
-import org.gmol.TranslatingSysTray.translator.Dataset;
 import org.gmol.TranslatingSysTray.translator.DatasetEx;
 import org.gmol.TranslatingSysTray.translator.IDataset;
 import org.gmol.TranslatingSysTray.translator.Translator;
@@ -32,7 +31,7 @@ public class Tray implements IGui {
 	public static final String IMAGE = "cambridge01.png";
 	TrayIcon trayIcon;
 	SystemTray tray;
-	DisplayFrame frame;;
+	IFrame frame;;
 	Translator translator;
 	IDataset dataset;
 
@@ -108,16 +107,14 @@ public class Tray implements IGui {
 						e1.printStackTrace();
 					}
 				} else if (clickCount >= 2) {
-					frame.setVisible(false);
-					frame.setAlwaysOnTop(false);
+					frame.hideFrame();
 				}
 				break;
 			case MouseEvent.BUTTON2: // middle button
 				LOGGER.debug("butt 2");
 				if (clickCount == 1) {
 					LOGGER.debug("1 click, hide the frame");
-					frame.setVisible(false);
-					frame.setAlwaysOnTop(false);
+					frame.hideFrame();
 				} else if (clickCount >= 2) {
 				}
 				break;
@@ -159,7 +156,7 @@ public class Tray implements IGui {
 					}
 
 					LOGGER.debug("entered is false set it to true");
-					frame.setVisible(true);
+					frame.showFrame();
 					try {
 	                    setText(dataset.getFirstTranslation());
                     } catch (DatasetEx e) {
@@ -169,10 +166,7 @@ public class Tray implements IGui {
 					java.awt.EventQueue.invokeLater(new Runnable() {
 						@Override
 						public void run() {
-							frame.setState(java.awt.Frame.NORMAL);
-							frame.setAlwaysOnTop(true);
-							frame.toFront();
-							frame.repaint();
+							frame.showFrame();
 						}
 					});
 				} else if (event.getClickCount() >= 2) {
