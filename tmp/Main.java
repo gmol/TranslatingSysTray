@@ -79,8 +79,7 @@ class Browser extends Region {
 		try {
 			// File f = new
 			// File("/home/astulka/Documents/workspace/TranslatingSysTray/tmp/index.html");
-			File f = new File(
-					"/home/stulka/Documents/Priv/workspace/TranslatingSysTray/tmp/index.html");
+			File f = new File("index.html");
 			// System.out.println(readFile("/home/astulka/Downloads/index.html"));
 			
 			// THAT WHAT I WAS LOOKING FOR
