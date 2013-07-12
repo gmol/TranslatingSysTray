@@ -13,11 +13,35 @@ note as N1
 <size:10> for a particular Dataset object </size>
 end note
 
-package org.gmol.TranslatingSysTray.translator {
+package org.gmol.TranslatingSysTray.gui {
     
-    interface ITranslator {
-        +IDataset translate(String word) throws TranslatorEx
+    interface IFrame {
+	+ void addMouseListener(MouseListener l);
+	+ void showFrame();
+	+ void hideFrame();
+	+ void setText(String txt);
     }
+    
+    class DisplayFrame {
+    }
+    DisplayFrame -up-|> IFrame
+    DisplayFrame -up-|> JFrame
+
+
+	class FxFrame {
+	}
+	FxFrame -up-|> JFrame 
+	FxFrame -up-|> IFrame
+
+	interface IGui {
+	+ void setText(String txt);
+	}
+	
+	class Tray {
+	}
+	Tray -up-|> IGui
+
+
     class Translator implements ITranslator {
     
         + Translator(String key)     
