@@ -4,115 +4,81 @@ skinparam backgroundColor MintCream
 
 hide empty members
 
-note as N1
-<size:10> Translator keeps Datasets in the map
-<size:10> <b><color:SlateGray >key=word,val=Dataset </color>
-<size:10> When Translator's method is being called from Dataset
-<size:10> it should be called like this <u> translator.getPage(this, int indexp) </u>
-<size:10> So that Translator is able to perform getPage
-<size:10> for a particular Dataset object </size>
-end note
-
 package org.gmol.TranslatingSysTray.gui {
     
-    interface IFrame {
+    interface IFrame extends IGui {
 	+ void addMouseListener(MouseListener l);
 	+ void showFrame();
 	+ void hideFrame();
 	+ void setText(String txt);
     }
+
     
-    class DisplayFrame {
+    Class DisplayFrame implements IFrame{
     }
-    DisplayFrame -up-|> IFrame
-    DisplayFrame -up-|> JFrame
+    DisplayFrame -up-|> java.awt.Frame
 
 
-	class FxFrame {
+	Class FxFrame implements IFrame {
 	}
-	FxFrame -up-|> JFrame 
-	FxFrame -up-|> IFrame
+	FxFrame -up-|> java.awt.Frame 
 
 	interface IGui {
 	+ void setText(String txt);
 	}
-	
-	class Tray {
+
+	Class Tray implements IGui {
 	}
-	Tray -up-|> IGui
+
+    Class Tray.FrameMouseListener {
+    }
+    Tray +.. Tray.FrameMouseListener
+    IFrame .. Tray.FrameMouseListener
+
+    Class Tray.TrayMouseListener {
+    }
+    Tray +.. Tray.TrayMouseListener
 
 
-    class Translator implements ITranslator {
+    Tray --> org.gmol.TranslatingSysTray.translator.IDataset : dataset >
+    Tray --> IFrame : frame >
+    Class PopupMenu {
+    }
+
+    Class MenuItem {
+    }
+
+    PopupMenu "1" *--> "*" MenuItem
+    Tray "1" *--> "1" PopupMenu
+
     
-        + Translator(String key)     
-        ~ List<Entry> getPage(IDataset ds, int pageIndex)
-        ~ String getTranslation(Entry e)
+    Class Tray.ExitListener {
     }
-    class DatasetEx {
+    note "Only EXIT menu item object has\nTray.ExitListener assigned" as N1
+    MenuItem *.. N1
+    N1 ..> "1" Tray.ExitListener
+}
+
+package org.gmol.TranslatingSysTray.translator {
+
+    Class DatasetEx {
     }
-    class IDataset {
-	    + String getWord()
-	    
-		+ int getPageSize()
-   		+ int getTotalPageNumber()
-   		+ int getTotalResultNumber()
+
+    Class IDataset {
+        + String getWord()
+    
+        + int getPageSize()
+    	+ int getTotalPageNumber()
+    	+ int getTotalResultNumber()
 
         + String getFirstTranslation() throws DatasetEx;
-   		+ String getNextTranslation() throws DatasetEx;
+        + String getNextTranslation() throws DatasetEx;
         + String getPreviousTranslation() throws DatasetEx;
         + String getTranslation(String entryLabel) throws DatasetEx;
         + List<String> getEntryLabels(int pageIndex)
     }
-    class Dataset implements IDataset{
-        - String word
 
-        - int pageSize
-        - int totalResultNumber
-        - int totalPageNumber
-        
-        - int currentEntryIndex
-        - List<Entry> entries
-        ~ // can only be created by Translator\nDataset(Translator translator, String word, int pageSize, Page page)
-        - Dataset()
-    }
-    class Entry {
-        - String translation
-        ~ String getTranslation()
-    }
-    class TranslatorEx {
-    }
-    class DeJsonizer << (S,Yellow) Static >>{
-    }
-    class Page {
-    }
-}
-class SkPublishAPI #LightSkyBlue {
-}
-class Logger << (S,#FF7700) Singleton >> {
+    IDataset .. DatasetEx
 }
 
-
-ITranslator .. IDataset
-'Dataset -up-|> IDataset
-'Translator -up-|> ITranslator
-'ITranslator . TranslatorEx
-TranslatorEx .. ITranslator
-Translator "1" *--> "(*)" Dataset : datasets >
-N1 .. Dataset
-N1 .. Translator
-'Dataset .. N1
-'Translator .. N1
-Translator "1" <-- "1" Dataset : translator <
-Translator "1" --> "1" SkPublishAPI : api >
-'Translator .. TranslatorEx
-Translator --> Logger : LOGGER
-Translator .. DeJsonizer
-Dataset --> Logger : LOGGER
-Dataset "1" *--> "entries.size()" Entry : entries >
-'Dataset .. DatasetEx
-Dataset .. Page
-Page "1" *--> "(*)" Entry : entries
-DeJsonizer .. Page
-IDataset .. DatasetEx
-
-@enduml
+    @enduml
