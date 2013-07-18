@@ -12,6 +12,8 @@
 	<name>Translating System Tray</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>2.2.3</javafx.version>
+    <javafx.runtime.lib.jar>${java.home}/lib/jfxrt.jar</javafx.runtime.lib.jar>
 	</properties>
 
 	<dependencies>
@@ -31,6 +33,13 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+    <!--dependency>
+      <groupId>javafx</groupId>
+      <artifactId>jfxrt</artifactId>
+      <version>${javafx.version}</version>
+       <scope>system</scope>
+       <systemPath>${javafx.runtime.lib.jar}</systemPath>
+     </dependency-->
 	</dependencies>
 
 	<build>
@@ -42,6 +51,14 @@
 					<mainClass>org.gmol.TranslatingSysTray.App</mainClass>
 				</configuration>
 			</plugin>
+      <plugin>
+        <groupId>com.zenjava</groupId>
+         <artifactId>javafx-maven-plugin</artifactId>
+         <version>2.0</version>
+         <configuration>
+           <mainClass>[put your application main class here]</mainClass>
+         </configuration>
+      </plugin>
 		</plugins>
 	</build>
 	
