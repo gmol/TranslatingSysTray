@@ -56,7 +56,8 @@ public class Tray implements IGui {
 				//
 				tray.add(trayIcon);
 				// Create and set up the window.
-				frame = new DisplayFrame("Translator");
+				// frame = new DisplayFrame("Translator");
+				frame = new FxFrame();
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
 			}
@@ -156,7 +157,7 @@ public class Tray implements IGui {
 					}
 
 					LOGGER.debug("entered is false set it to true");
-					frame.showFrame();
+					//frame.showFrame();
 					try {
 	                    setText(dataset.getFirstTranslation());
                     } catch (DatasetEx e) {
