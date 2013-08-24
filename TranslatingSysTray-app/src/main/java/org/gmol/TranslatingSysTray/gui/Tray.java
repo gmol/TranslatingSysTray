@@ -56,8 +56,8 @@ public class Tray implements IGui {
 				//
 				tray.add(trayIcon);
 				// Create and set up the window.
-				// frame = new DisplayFrame("Translator");
-				frame = new FxFrame();
+				frame = new DisplayFrame("Translator");
+				//frame = new FxFrame();
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
 			}
