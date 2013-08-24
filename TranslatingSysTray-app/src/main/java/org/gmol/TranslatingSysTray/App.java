@@ -3,6 +3,13 @@ package org.gmol.TranslatingSysTray;
 import org.gmol.TranslatingSysTray.gui.Tray;
 import org.apache.log4j.Logger;
 
+import static org.kohsuke.args4j.ExampleMode.ALL;
+import org.kohsuke.args4j.Argument;
+import org.kohsuke.args4j.CmdLineException;
+import org.kohsuke.args4j.CmdLineParser;
+import org.kohsuke.args4j.Option;
+import org.kohsuke.args4j.spi.BooleanOptionHandler;
+
 /**
  * 
  */
@@ -11,6 +18,12 @@ public class App {
 	private static final Logger LOGGER = Logger.getLogger(App.class);
 	
 	public String key;
+	private boolean isJavafx = false;
+	
+	@Option(name="-fx", usage="Use Java Fx GUI")
+	void setIsJavaFx(boolean javafx) {
+		isJavafx = javafx;
+	}
 	
 	public App(String key) {
 		this.key = key;
@@ -43,6 +56,19 @@ public class App {
 		}
 		LOGGER.info("JavaFX enabled: NO");
 		return false;
+	}
+	
+	private void doMain(String[] args) {
+		LOGGER.info("doMain");
+        CmdLineParser parser = new CmdLineParser(this);
+		try {
+		    parser.parseArgument(args);
+		} catch( CmdLineException e ) {
+		    System.err.println(e.getMessage());
+		    System.err.println("java -jar myprogram.jar [options...] arguments...");
+		    parser.printUsage(System.err);
+		    return;
+		}
 	}
 	
 	public static void main(String[] args) {		
