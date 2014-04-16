@@ -7,25 +7,27 @@ import java.util.List;
 
 /**
  * @author stulka
- *
+ * 
  */
 public interface IDataset {
 	//
-    String getWord();
-    //
-    int getPageSize();
-	//
-	int getTotalPageNumber();
+	String getWord();
+
 	//
 	int getTotalResultNumber();
-    //
-	String getFirstTranslation() throws DatasetEx;
-    //
-	String getNextTranslation() throws DatasetEx;
+
 	//
-    String getPreviousTranslation() throws DatasetEx;
-    //
-    String getTranslation(String entryLabel);
-    //
-    List<String> getEntryLabels(int pageIndex);
+	String getFirstTranslation() throws DatasetEx;
+
+	//
+	String getNextTranslation() throws DatasetEx;
+
+	//
+	String getPreviousTranslation() throws DatasetEx;
+
+	//
+	String getTranslation(String entryLabel);
+
+	//
+	List<String> getEntryLabels(int pageIndex);
 }

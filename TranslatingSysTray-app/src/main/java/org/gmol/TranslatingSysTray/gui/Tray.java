@@ -34,9 +34,11 @@ public class Tray implements IGui {
 	IFrame frame;;
 	Translator translator;
 	IDataset dataset;
+	boolean isJavaFx = false;
 
-	public Tray(String key) {
+	public Tray(String key, boolean javafx) {
 		translator = new Translator(key);
+		isJavaFx = javafx;
 		open();
 	}
 
@@ -56,8 +58,12 @@ public class Tray implements IGui {
 				//
 				tray.add(trayIcon);
 				// Create and set up the window.
-				frame = new DisplayFrame("Translator");
-				//frame = new FxFrame();
+				if (isJavaFx) {
+					frame = new FxFrame();
+				}
+				else { 
+					frame = new DisplayFrame("Translator");
+				}
 			} catch (AWTException e) {
 				System.err.println("Error starting tray: " + e);
 			}
@@ -160,6 +166,7 @@ public class Tray implements IGui {
 					//frame.showFrame();
 					try {
 	                    setText(dataset.getFirstTranslation());
+						setStatusText("Meanings:" + dataset.getTotalResultNumber());
                     } catch (DatasetEx e) {
 	                    // TODO Auto-generated catch block
 	                    e.printStackTrace();
@@ -208,5 +215,13 @@ public class Tray implements IGui {
 			s = ee.toString();
 		}
 		return s;
+	}
+
+	@Override
+	public void setStatusText(String txt) {
+		// TODO Auto-generated method stub
+		LOGGER.debug("set status:" + txt);
+		frame.setStatusText(txt);
+		
 	}
 }

@@ -8,6 +8,7 @@ public interface IFrame extends IGui {
 	void showFrame();
 	void hideFrame();
 	void setText(String txt);
+	void setStatusText(String txt);
 	
 
 }

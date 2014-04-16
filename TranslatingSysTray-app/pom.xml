@@ -12,6 +12,8 @@
 	<name>Translating System Tray</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javafx.version>2.2.3</javafx.version>
+    <javafx.runtime.lib.jar>${java.home}/lib/jfxrt.jar</javafx.runtime.lib.jar>
 	</properties>
 
 	<dependencies>
@@ -31,6 +33,13 @@
 			<artifactId>log4j</artifactId>
 			<version>1.2.17</version>
 		</dependency>
+        <dependency>
+          <groupId>javafx</groupId>
+          <artifactId>jfxrt</artifactId>
+          <version>${javafx.version}</version>
+          <scope>system</scope>
+          <systemPath>${javafx.runtime.lib.jar}</systemPath>
+        </dependency>
 		<dependency>
 			<groupId>args4j</groupId>
 			<artifactId>args4j</artifactId>

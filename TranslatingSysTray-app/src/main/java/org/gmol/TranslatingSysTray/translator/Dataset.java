@@ -45,16 +45,6 @@ public class Dataset implements IDataset{
     }
 
 	@Override
-    public int getPageSize() {
-	    return pageSize;
-    }
-
-	@Override
-    public int getTotalPageNumber() {
-	    return totalPageNumber;
-    }
-
-	@Override
     public int getTotalResultNumber() {
 	    return totalResultNumber;
     }	
@@ -71,6 +61,7 @@ public class Dataset implements IDataset{
 		}
 
 		try {
+			Entry e = null;
 			if (nextIndex > entries.size()) {				
 				LOGGER.debug("Entries has not been downloaded yet");
 			    LOGGER.debug("Check if Dataset is not on the last page");
@@ -79,35 +70,35 @@ public class Dataset implements IDataset{
 					List<Entry> newEntries = translator.getEntries(this, currentPageIndex + 1);					
 					if (newEntries.size() > 0) {
 						entries.addAll(newEntries);
-						Entry e = entries.get(nextIndex);
+						e = entries.get(nextIndex);
 						LOGGER.debug("Entry [" + e.getEntryId() + "] is new so translate it");
 						String translation = translator.getEntryTranslation(e);
 						e.setTranslation(translation);
-						currentEntryIndex = nextIndex;
-						return translation;
 					} else {
 						String msg = "The fetched page returned 0 entries"; 
 						LOGGER.warn(msg);
 						throw new DatasetEx(msg);
 					}
 				} else {
-					LOGGER.debug("Dataset is on the last page return empty sting");
-					return ""; //TODO return "" or the last translation				
+					LOGGER.debug("Dataset is on the last page return last entry");
+					e= entries.get(entries.size() - 1);
+					nextIndex = currentEntryIndex;
 				}				
 			} else {
 				LOGGER.debug("Entries from the downloaded page but check if the entry has been translated yet");
-				Entry e = entries.get(nextIndex - 1);				
+				e = entries.get(nextIndex - 1);				
 				if (e.getTranslation().isEmpty()) {
 					LOGGER.debug("Entry [" + e.getEntryId() + "] has not been translated yet. Translate");
 					String translation = translator.getEntryTranslation(e);
 					e.setTranslation(translation);
-					currentEntryIndex = nextIndex;
-					return translation;
+				} else {
+					LOGGER.debug("Entry [" + e.getEntryId() + "] has already been translated");
 				}
-				LOGGER.debug("Entry [" + e.getEntryId() + "] has already been translated");
-				currentEntryIndex = nextIndex;
-				return e.getTranslation();
+			
 			}
+			currentEntryIndex = nextIndex;
+			return e.getTranslation();
+			
 		} catch (TranslatorEx e) {
 			e.printStackTrace();
 			throw new DatasetEx(e);

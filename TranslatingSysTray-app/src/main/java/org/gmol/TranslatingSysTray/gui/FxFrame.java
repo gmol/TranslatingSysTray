@@ -137,6 +137,12 @@ public class FxFrame extends JFrame implements IFrame {
 
 	}
 
+	@Override
+	public void setStatusText(String txt) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 class Browser extends Region {

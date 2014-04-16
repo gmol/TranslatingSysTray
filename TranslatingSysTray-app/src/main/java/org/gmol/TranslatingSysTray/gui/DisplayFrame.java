@@ -7,10 +7,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JEditorPane;
+import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
 
 public class DisplayFrame extends JFrame implements IFrame {
 
@@ -21,6 +25,7 @@ public class DisplayFrame extends JFrame implements IFrame {
 
 	private JPanel mainPane = null;
 	private JEditorPane textPane = null;
+	JLabel statusLabel = new JLabel("status");
 
 	public DisplayFrame() throws HeadlessException {
 		// TODO Auto-generated constructor stub
@@ -55,6 +60,18 @@ public class DisplayFrame extends JFrame implements IFrame {
 //		repaint();
 		
 		mainPane.add(editorScrollPane);
+		
+		// Status bar
+		
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBorder(new BevelBorder(BevelBorder.LOWERED));
+		add(statusPanel, BorderLayout.SOUTH);
+		statusPanel.setPreferredSize(new Dimension(getWidth(), 20));
+		statusPanel.setLayout(new BoxLayout(statusPanel, BoxLayout.X_AXIS));
+		
+		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		statusPanel.add(statusLabel);
+		
 		add(mainPane);
 
 		pack();
@@ -111,5 +128,12 @@ public class DisplayFrame extends JFrame implements IFrame {
 	public void hideFrame() {
 		setVisible(false);
 		setAlwaysOnTop(false);
+	}
+
+	@Override
+	public void setStatusText(String txt) {
+		// TODO Auto-generated method stub
+		statusLabel.setText(" " + txt);
+		
 	}
 }
