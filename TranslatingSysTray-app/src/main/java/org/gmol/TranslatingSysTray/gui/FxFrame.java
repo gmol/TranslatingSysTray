@@ -23,6 +23,7 @@ import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import org.apache.log4j.Logger;
 
 import javax.swing.*;
 
@@ -91,9 +92,7 @@ public class FxFrame extends JFrame implements IFrame {
 		String content = meta + css + rest;
 		LOGGER.debug("index of meta data: " + metaindex);
 		LOGGER.debug("content:\n" + content);
-		Browser browser = new Browser(content);
-		browser.
-		Scene scene = new Scene(browser, 800, 600, Color.web("#666970"));
+		Scene scene = new Scene(new Browser(content), 800, 600, Color.web("#666970"));
 		// Text text = new Text();
 		// text.setX(40);
 		// text.setY(100);
@@ -154,6 +153,7 @@ class Browser extends Region {
 
 	final WebView browser = new WebView();
 	final WebEngine webEngine = browser.getEngine();
+	private static final Logger LOGGER = Logger.getLogger(Browser.class);
 
 	private static String readFile(String path) throws IOException {
 
