@@ -73,43 +73,7 @@ public class FxFrame extends JFrame implements IFrame {
 		LOGGER.debug("initFx");
 
 		// This method is invoked on the JavaFX thread
-		Scene scene = createScene();
-//	    EventHandler<javafx.scene.input.MouseEvent> mouseHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
-//	    	 
-//	        @Override
-//	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
-//	            System.out.println(mouseEvent.getEventType() + "\n"
-//	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
-//	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
-//	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
-//	             
-//
-//	        }
-//	     
-//	    };
-		scene.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-	    	 
-	        @Override
-	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
-	        	MouseButton button = mouseEvent.getButton();
-	        	
-	        	if (button.equals(MouseButton.PRIMARY)) {
-	        		LOGGER.debug("PRIMARY button clicked");
-	        	} else if (button.equals(MouseButton.SECONDARY)) {
-	        		LOGGER.debug("SECONDARY button clicked");
-	        	} else if (button.equals(MouseButton.MIDDLE)) {
-	        		LOGGER.debug("MIDDLE button clicked");
-	        	} else {
-	        		LOGGER.debug("Button clicked:" + mouseEvent.toString());	
-	        	}
-	        	
-	            System.out.println(mouseEvent.getEventType() + "\n"
-	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
-	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
-	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
-	        }
-	    });
-		
+		Scene scene = createScene();		
 		fxPanel.setScene(scene);
 	}
 
@@ -127,7 +91,9 @@ public class FxFrame extends JFrame implements IFrame {
 		String content = meta + css + rest;
 		LOGGER.debug("index of meta data: " + metaindex);
 		LOGGER.debug("content:\n" + content);
-		Scene scene = new Scene(new Browser(content), 800, 600, Color.web("#666970"));
+		Browser browser = new Browser(content);
+		browser.
+		Scene scene = new Scene(browser, 800, 600, Color.web("#666970"));
 		// Text text = new Text();
 		// text.setX(40);
 		// text.setY(100);
@@ -222,6 +188,29 @@ class Browser extends Region {
 			System.out.println(e);
 		}
 		// add the web view to the scene
+		browser.setContextMenuEnabled(false);
+		browser.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+	    	 
+	        @Override
+	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+	        	MouseButton button = mouseEvent.getButton();
+	        	
+	        	if (button.equals(MouseButton.PRIMARY)) {
+	        		LOGGER.debug("PRIMARY button clicked");
+	        	} else if (button.equals(MouseButton.SECONDARY)) {
+	        		LOGGER.debug("SECONDARY button clicked");
+	        	} else if (button.equals(MouseButton.MIDDLE)) {
+	        		LOGGER.debug("MIDDLE button clicked");
+	        	} else {
+	        		LOGGER.debug("Button clicked:" + mouseEvent.toString());	
+	        	}
+	        	
+	            System.out.println(mouseEvent.getEventType() + "\n"
+	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
+	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
+	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
+	        }
+	    });
 		getChildren().add(browser);
 
 	}
