@@ -18,8 +18,10 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import javafx.scene.Group;
 import javafx.embed.swing.JFXPanel;
+import javafx.event.EventHandler;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
 
@@ -71,6 +73,34 @@ public class FxFrame extends JFrame implements IFrame {
 
 		// This method is invoked on the JavaFX thread
 		Scene scene = createScene();
+//	    EventHandler<javafx.scene.input.MouseEvent> mouseHandler = new EventHandler<javafx.scene.input.MouseEvent>() {
+//	    	 
+//	        @Override
+//	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+//	            System.out.println(mouseEvent.getEventType() + "\n"
+//	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
+//	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
+//	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
+//	             
+//
+//	        }
+//	     
+//	    };
+		scene.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+	    	 
+	        @Override
+	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+	        	
+	            System.out.println(mouseEvent.getEventType() + "\n"
+	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
+	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
+	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
+	             
+
+	        }
+	     
+	    });
+		
 		fxPanel.setScene(scene);
 	}
 
