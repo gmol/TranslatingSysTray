@@ -21,6 +21,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.event.EventHandler;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import javax.swing.*;
@@ -90,15 +91,23 @@ public class FxFrame extends JFrame implements IFrame {
 	    	 
 	        @Override
 	        public void handle(javafx.scene.input.MouseEvent mouseEvent) {
+	        	MouseButton button = mouseEvent.getButton();
+	        	
+	        	if (button.equals(MouseButton.PRIMARY)) {
+	        		LOGGER.debug("PRIMARY button clicked");
+	        	} else if (button.equals(MouseButton.SECONDARY)) {
+	        		LOGGER.debug("SECONDARY button clicked");
+	        	} else if (button.equals(MouseButton.MIDDLE)) {
+	        		LOGGER.debug("MIDDLE button clicked");
+	        	} else {
+	        		LOGGER.debug("Button clicked:" + mouseEvent.toString());	
+	        	}
 	        	
 	            System.out.println(mouseEvent.getEventType() + "\n"
 	                    + "X : Y - " + mouseEvent.getX() + " : " + mouseEvent.getY() + "\n"
 	                    + "SceneX : SceneY - " + mouseEvent.getSceneX() + " : " + mouseEvent.getSceneY() + "\n"
 	                    + "ScreenX : ScreenY - " + mouseEvent.getScreenX() + " : " + mouseEvent.getScreenY());
-	             
-
 	        }
-	     
 	    });
 		
 		fxPanel.setScene(scene);
