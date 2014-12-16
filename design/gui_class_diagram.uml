@@ -28,20 +28,31 @@ package org.gmol.TranslatingSysTray.gui {
 	}
 
 	Class Tray implements IGui {
+        ~IFrame frame
+    
 	}
 
     Class Tray.FrameMouseListener {
     }
-    Tray +.. Tray.FrameMouseListener
-    IFrame .. Tray.FrameMouseListener
+    Tray +.. Tray.FrameMouseListener : "create \ninner class"
+    IFrame ..> Tray.FrameMouseListener
 
     Class Tray.TrayMouseListener {
     }
-    Tray +.. Tray.TrayMouseListener
+    Tray +.. Tray.TrayMouseListener : "create \ninner class"
 
 
     Tray --> org.gmol.TranslatingSysTray.translator.IDataset : dataset >
-    Tray --> IFrame : frame >
+'    Tray .. IFrame 
+'    Tray *--> FxFrame : frame >
+'    Tray *--> DisplayFrame : frame >
+
+    Tray *--> "java.awt2.TrayIcon" : trayIcon
+    Tray.TrayMouseListener ..> "java.awt2.TrayIcon" 
+
+    FxFrame  <--* Tray : frame <
+    DisplayFrame <--* Tray : frame <
+
     Class PopupMenu {
     }
 
@@ -57,6 +68,8 @@ package org.gmol.TranslatingSysTray.gui {
     note "Only EXIT menu item object has\nTray.ExitListener assigned" as N1
     MenuItem *.. N1
     N1 ..> "1" Tray.ExitListener
+
+    
 }
 
 package org.gmol.TranslatingSysTray.translator {

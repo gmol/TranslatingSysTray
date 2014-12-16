@@ -68,7 +68,7 @@ class Logger << (S,#FF7700) Singleton >> {
 }
 
 
-ITranslator .. IDataset
+ITranslator o..> IDataset
 'Dataset -up-|> IDataset
 'Translator -up-|> ITranslator
 'ITranslator . TranslatorEx
