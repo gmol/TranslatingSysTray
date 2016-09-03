@@ -246,54 +246,70 @@ class Browser extends Region {
 	
 	private java.awt.event.MouseEvent createAwtMouseEvent(javafx.scene.input.MouseEvent mouseEvent) {
 	    int id = -1;
-	    switch (mouseEvent.getEventType()) {
-        case javafx.scene.input.MouseEvent.MOUSE_CLICKED:
-            id = java.awt.event.MouseEvent.MOUSE_CLICKED; 
-            break;
-        case javafx.scene.input.MouseEvent.MOUSE_PRESSED:
-            id = java.awt.event.MouseEvent.MOUSE_PRESSED;
-            break;
-        case javafx.scene.input.MouseEvent.MOUSE_RELEASED:
-            id = java.awt.event.MouseEvent.MOUSE_RELEASED;
-            break;
-        case javafx.scene.input.MouseEvent.MOUSE_ENTERED:
-            id = java.awt.event.MouseEvent.MOUSE_ENTERED;
-            break;
-        case javafx.scene.input.MouseEvent.MOUSE_EXITED:
-            id = java.awt.event.MouseEvent.MOUSE_EXITED;
-            break;
-        case javafx.scene.input.MouseEvent.MOUSE_MOVED:
-            id = java.awt.event.MouseEvent.MOUSE_MOVED;
-            break;  
-        default:
-            LOGGER.warn("Event[" + mouseEvent.getEventType().toString() + "] not supported");
-            break;
-        }
+	    if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_CLICKED) {
+	    	id = java.awt.event.MouseEvent.MOUSE_CLICKED;	
+	    } else if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_PRESSED) {
+		    id = java.awt.event.MouseEvent.MOUSE_PRESSED; 	
+	    } else if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_RELEASED) {
+	    	id = java.awt.event.MouseEvent.MOUSE_RELEASED;
+	    } else if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_ENTERED) {
+	    	id = java.awt.event.MouseEvent.MOUSE_ENTERED;
+	    } else if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_EXITED) {
+	    	id = java.awt.event.MouseEvent.MOUSE_EXITED;
+	    } else if (mouseEvent.getEventType() == javafx.scene.input.MouseEvent.MOUSE_MOVED) {
+	    	id = java.awt.event.MouseEvent.MOUSE_MOVED;
+	    } else {
+	    	LOGGER.warn("Event[" + mouseEvent.getEventType().toString() + "] not supported");
+	    }
+
+	    // switch (mouseEvent.getEventType()) {
+     //    case javafx.scene.input.MouseEvent.MOUSE_CLICKED:
+     //        id = java.awt.event.MouseEvent.MOUSE_CLICKED; 
+     //        break;
+     //    case javafx.scene.input.MouseEvent.MOUSE_PRESSED:
+     //        id = java.awt.event.MouseEvent.MOUSE_PRESSED;
+     //        break;
+     //    case javafx.scene.input.MouseEvent.MOUSE_RELEASED:
+     //        id = java.awt.event.MouseEvent.MOUSE_RELEASED;
+     //        break;
+     //    case javafx.scene.input.MouseEvent.MOUSE_ENTERED:
+     //        id = java.awt.event.MouseEvent.MOUSE_ENTERED;
+     //        break;
+     //    case javafx.scene.input.MouseEvent.MOUSE_EXITED:
+     //        id = java.awt.event.MouseEvent.MOUSE_EXITED;
+     //        break;
+     //    case javafx.scene.input.MouseEvent.MOUSE_MOVED:
+     //        id = java.awt.event.MouseEvent.MOUSE_MOVED;
+     //        break;  
+     //    default:
+     //        LOGGER.warn("Event[" + mouseEvent.getEventType().toString() + "] not supported");
+     //        break;
+     //    }
 	    
 	    
 	    int modifiers = -1;
 	    int button = -1;
 	    boolean popupTrigger = false;
 	    switch (mouseEvent.getButton()) {
-        case javafx.scene.input.MouseButton.PRIMARY:
+        case PRIMARY:
             modifiers = java.awt.event.MouseEvent.BUTTON1_MASK;
             button = java.awt.event.MouseEvent.BUTTON1 ;
             break;
-        case javafx.scene.input.MouseButton.SECONDARY:
+        case SECONDARY:
             modifiers = java.awt.event.MouseEvent.BUTTON2_MASK;
             button = java.awt.event.MouseEvent.BUTTON2 ;
             break;
-        case javafx.scene.input.MouseButton.MIDDLE:
+        case MIDDLE:
             modifiers = java.awt.event.MouseEvent.BUTTON3_MASK;
             button = java.awt.event.MouseEvent.BUTTON3 ;
             break;
-        case javafx.scene.input.MouseButton.NONE:
+        case NONE:
             button = java.awt.event.MouseEvent.NOBUTTON;
             break;
         default:
             LOGGER.warn("Mouse button[" + mouseEvent.getButton().toString() + "] not supported");
             break;
         }
-	    return new java.awt.event.MouseEvent(null, id, (new java.util.Date()).getTime(), modifiers, (int)mouseEvent.getX(), (int)mouseEvent.getY(), (int)mouseEvent.getScreenX(), (int)mouseEvent.getScreenY(), mouseEvent.getClickCount(), popupTrigger, button);
+	    return new java.awt.event.MouseEvent(frame, id, (new java.util.Date()).getTime(), modifiers, (int)mouseEvent.getX(), (int)mouseEvent.getY(), (int)mouseEvent.getScreenX(), (int)mouseEvent.getScreenY(), mouseEvent.getClickCount(), popupTrigger, button);
 	}
 }

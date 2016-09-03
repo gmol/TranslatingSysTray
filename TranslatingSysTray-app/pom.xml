@@ -13,7 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.version>2.2.3</javafx.version>
-    <javafx.runtime.lib.jar>${java.home}/lib/jfxrt.jar</javafx.runtime.lib.jar>
+    <javafx.runtime.lib.jar>${java.home}/lib/ext/jfxrt.jar</javafx.runtime.lib.jar>
 	</properties>
 
 	<dependencies>
